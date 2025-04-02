@@ -78,3 +78,15 @@ model Booking {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
+
+model Payment {
+  id String @id @default(cuid(2))
+  status String @db.VarChar(10)
+  total_price Float
+  discount Float
+  total_paid Float
+  paid_method String @db.VarChar(10)
+  paid_date DateTime?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
