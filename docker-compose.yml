@@ -1,0 +1,12 @@
+services:
+  siridb:
+    container_name: siri_database
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: siri
+      POSTGRES_PASSWORD: B3_my_LITTLE_s3cr3t
+      POSTGRES_DB: siri_resort
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
