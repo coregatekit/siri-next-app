@@ -24,6 +24,8 @@ model Employee {
   mobile String? @db.VarChar(10)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  Booking Booking[]
 }
 
 model Customer {
@@ -34,6 +36,8 @@ model Customer {
   gender String @db.VarChar(6)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  Booking Booking[]
 }
 
 model Room {
@@ -45,6 +49,8 @@ model Room {
   price_per_night Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  Booking Booking[]
 }
 
 model Type {
@@ -52,6 +58,23 @@ model Type {
   name String
   detail String?
   rooms Room[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Booking {
+  id String @id @default(cuid(2))
+  customer_id String
+  customer Customer @relation(fields: [customer_id], references: [id], onDelete: NoAction)
+  employee_id String
+  employee Employee @relation(fields: [employee_id], references: [id], onDelete: NoAction)
+  room_id String
+  room Room @relation(fields: [room_id], references: [id], onDelete: NoAction)
+  stay_duration Int
+  check_in_date DateTime
+  check_out_date DateTime
+  status String @db.VarChar(10)
+  total_price Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
