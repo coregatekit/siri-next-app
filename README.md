@@ -1,5 +1,17 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Preparing
+
+We need to create an `.env` file for setup environment variables before start the project.
+
+```env
+POSTGRES_USER=siri
+POSTGRES_PASSWORD=B3_my_LITTLE_s3cr3t
+POSTGRES_DB=siri_resort
+
+DATABASE_URL="postgresql://siri:B3_my_LITTLE_s3cr3t@localhost:5432/siri_resort"
+```
+
 ## Getting Started
 
 First, run the development server:
