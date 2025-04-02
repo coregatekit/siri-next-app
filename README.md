@@ -12,6 +12,10 @@ POSTGRES_DB=siri_resort
 DATABASE_URL="postgresql://siri:B3_my_LITTLE_s3cr3t@localhost:5432/siri_resort"
 ```
 
+## Project Entities
+
+![Resort Entity Relationship Diagram](./siri_resort_entities.png)
+
 ## Getting Started
 
 First, run the development server:
