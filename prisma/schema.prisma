@@ -70,6 +70,8 @@ model Booking {
   employee Employee @relation(fields: [employee_id], references: [id], onDelete: NoAction)
   room_id String
   room Room @relation(fields: [room_id], references: [id], onDelete: NoAction)
+  payment_id String @unique
+  payment Payment @relation(fields: [payment_id], references: [id], onDelete: Cascade)
   stay_duration Int
   check_in_date DateTime
   check_out_date DateTime
@@ -81,6 +83,7 @@ model Booking {
 
 model Payment {
   id String @id @default(cuid(2))
+  booking Booking?
   status String @db.VarChar(10)
   total_price Float
   discount Float
