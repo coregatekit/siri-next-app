@@ -85,5 +85,99 @@ describe('Employee Service', () => {
 				},
 			});
 		});
+
+		it('should throw an error if username already exists', async () => {
+			// Arrange
+			prisma.employee.findFirst.mockResolvedValue(mockCreatedEmployee);
+
+			// Act & Assert
+			await expect(service.createEmployee(mockEmployeeData)).rejects.toThrow(
+				'Username already exists',
+			);
+			expect(prisma.employee.findFirst).toHaveBeenCalledWith({
+				where: {
+					OR: [
+						{ username: mockEmployeeData.username },
+						{ email: mockEmployeeData.email },
+					],
+				},
+			});
+		});
+
+		it('should throw an error if email already exists', async () => {
+			// Arrange
+			const existingEmployee = {
+				...mockCreatedEmployee,
+				username: 'otheruser',
+			};
+			prisma.employee.findFirst.mockResolvedValue(existingEmployee);
+
+			// Act & Assert
+			await expect(service.createEmployee(mockEmployeeData)).rejects.toThrow(
+				'Email already exists',
+			);
+			expect(prisma.employee.findFirst).toHaveBeenCalledWith({
+				where: {
+					OR: [
+						{ username: mockEmployeeData.username },
+						{ email: mockEmployeeData.email },
+					],
+				},
+			});
+		});
+
+		it('should throw an error if an unexpected error occurs', async () => {
+			// Arrange
+			const unexpectedError = new Error(
+				'Unexpected error occurred while creating employee',
+			);
+			prisma.employee.findFirst.mockResolvedValue(null);
+			encryptionService.hashPassword.mockRejectedValue(unexpectedError);
+
+			// Act & Assert
+			await expect(service.createEmployee(mockEmployeeData)).rejects.toThrow(
+				'Unexpected error occurred while creating employee',
+			);
+			expect(prisma.employee.findFirst).toHaveBeenCalledWith({
+				where: {
+					OR: [
+						{ username: mockEmployeeData.username },
+						{ email: mockEmployeeData.email },
+					],
+				},
+			});
+		});
+
+		it('should handle non-Error exceptions', async () => {
+			// Arrange
+			prisma.employee.findFirst.mockResolvedValue(null);
+			encryptionService.hashPassword.mockImplementation(() => {
+				// Throw a non-Error object
+				throw 'String error';
+			});
+
+			// Act & Assert
+			await expect(service.createEmployee(mockEmployeeData)).rejects.toEqual(
+				'Unexpected error occurred while creating employee',
+			);
+			expect(prisma.employee.findFirst).toHaveBeenCalled();
+			expect(encryptionService.hashPassword).toHaveBeenCalled();
+		});
+
+		it('should handle null error', async () => {
+			// Arrange
+			prisma.employee.findFirst.mockResolvedValue(null);
+			encryptionService.hashPassword.mockImplementation(() => {
+				// Throw null
+				throw null;
+			});
+
+			// Act & Assert
+			await expect(service.createEmployee(mockEmployeeData)).rejects.toEqual(
+				'Unexpected error occurred while creating employee',
+			);
+			expect(prisma.employee.findFirst).toHaveBeenCalled();
+			expect(encryptionService.hashPassword).toHaveBeenCalled();
+		});
 	});
 });

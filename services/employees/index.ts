@@ -43,22 +43,28 @@ export class EmployeeService {
 					password: hashedPassword,
 					name: data.name,
 					email: data.email,
-          mobile: data.mobile,
+					mobile: data.mobile,
 				},
 			});
 
-      return {
-        id: employee.id,
-        username: employee.username,
-        name: employee.name,
-        email: employee.email,
-        mobile: employee.mobile,
-        createdAt: employee.created_at,
-        updatedAt: employee.updated_at,
-      } as unknown as EmployeeData;
-		} catch (error) {
-      console.error('Error creating employee:', error);
-      throw new Error('Failed to create employee');
+			return {
+				id: employee.id,
+				username: employee.username,
+				name: employee.name,
+				email: employee.email,
+				mobile: employee.mobile,
+				createdAt: employee.created_at,
+				updatedAt: employee.updated_at,
+			} as unknown as EmployeeData;
+		} catch (error: unknown) {
+			console.error('Error creating employee:', error);
+			if (error instanceof Error) {
+				const errorMessage = error.message;
+				throw new Error(errorMessage);
+			}
+      return Promise.reject(
+        'Unexpected error occurred while creating employee',
+      );
 		}
 	}
 }
