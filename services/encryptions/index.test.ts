@@ -33,5 +33,21 @@ describe('EncryptionService', () => {
         parallelism: 4,
       });
     });
+
+    it('should throw an error if hashing fails', async () => {
+      // Arrange
+      const plaintext = 'securePassword999';
+      const errorMessage = 'Hashing failed';
+      (argon2.hash as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+      // Act & Assert
+      await expect(service.hashPassword(plaintext)).rejects.toThrow('Failed to hash password');
+      expect(argon2.hash).toHaveBeenCalledWith(plaintext, {
+        type: argon2.argon2id,
+        memoryCost: 65536,
+        timeCost: 4,
+        parallelism: 4,
+      });
+    });
 	});
 });
