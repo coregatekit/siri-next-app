@@ -1,10 +1,17 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 const CreateUserFormSchema = z
@@ -46,10 +53,37 @@ function CreateUserForm() {
 			mobile: '',
 		},
 	});
+	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-	const onSubmit = (data: z.infer<typeof CreateUserFormSchema>) => {
-		// Handle user creation logic here
-		console.log('User data:', data);
+	const onSubmit = async (data: z.infer<typeof CreateUserFormSchema>) => {
+		try {
+			const { confirmPassword, ...employeeData } = data;
+
+			const response = await fetch('/api/employees/create', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(employeeData),
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) {
+				throw new Error(result.message);
+			}
+
+			toast.success('Success', {
+				description: 'User created successfully',
+			});
+			form.reset();
+		} catch (error) {
+			toast.error('Error', {
+				description: (error as Error).message,
+			});
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
@@ -149,7 +183,9 @@ function CreateUserForm() {
 					/>
 
 					{/* Submit Button */}
-					<Button className='w-24' type='submit'>Submit</Button>
+					<Button className='w-24' type='submit'>
+						Submit
+					</Button>
 				</form>
 			</Form>
 		</Card>
