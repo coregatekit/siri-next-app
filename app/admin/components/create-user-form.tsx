@@ -57,7 +57,7 @@ function CreateUserForm() {
 			<h1 className='text-xl'>Create a new user</h1>
 			<Form {...form}>
 				<form
-					className='flex flex-col justify-center gap-2 w-64'
+					className='flex flex-col items-center justify-center gap-2 w-full'
 					onSubmit={form.handleSubmit(onSubmit)}
 				>
 					{/* Username */}
@@ -65,7 +65,7 @@ function CreateUserForm() {
 						control={form.control}
 						name='username'
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className='w-full'>
 								<FormControl>
 									<Input placeholder='Username' {...field} />
 								</FormControl>
@@ -79,7 +79,7 @@ function CreateUserForm() {
 						control={form.control}
 						name='password'
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className='w-full'>
 								<FormControl>
 									<Input type='password' placeholder='Password' {...field} />
 								</FormControl>
@@ -93,7 +93,7 @@ function CreateUserForm() {
 						control={form.control}
 						name='confirmPassword'
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className='w-full'>
 								<FormControl>
 									<Input
 										type='password'
@@ -111,7 +111,7 @@ function CreateUserForm() {
 						control={form.control}
 						name='name'
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className='w-full'>
 								<FormControl>
 									<Input placeholder='Name' {...field} />
 								</FormControl>
@@ -125,7 +125,7 @@ function CreateUserForm() {
 						control={form.control}
 						name='email'
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className='w-full'>
 								<FormControl>
 									<Input placeholder='E-mail' {...field} />
 								</FormControl>
@@ -139,7 +139,7 @@ function CreateUserForm() {
 						control={form.control}
 						name='mobile'
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className='w-full'>
 								<FormControl>
 									<Input placeholder='Mobile phone' {...field} />
 								</FormControl>
