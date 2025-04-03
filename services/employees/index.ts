@@ -19,7 +19,7 @@ export class EmployeeService {
 			// Check existing employee
 			const existingUser = await this.prisma.employee.findFirst({
 				where: {
-					OR: [{ username: data.username }, { username: data.username }],
+					OR: [{ username: data.username }, { email: data.email }],
 				},
 			});
 
@@ -43,6 +43,7 @@ export class EmployeeService {
 					password: hashedPassword,
 					name: data.name,
 					email: data.email,
+          mobile: data.mobile,
 				},
 			});
 
