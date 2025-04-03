@@ -20,7 +20,6 @@ model Employee {
   password   String
   name       String
   email      String   @unique
-  phone      String   @unique
   mobile     String?  @db.VarChar(10)
   is_set_pw  Boolean  @default(false)
   is_admin   Boolean  @default(false)
