@@ -14,7 +14,7 @@ DATABASE_URL="postgresql://siri:B3_my_LITTLE_s3cr3t@localhost:5432/siri_resort"
 
 ## Project Entities
 
-![Resort Entity Relationship Diagram](./siri_resort_entities.png)
+![Resort Entity Relationship Diagram](./docs/siri_resort_entities_v2.png)
 
 ## Getting Started
 
