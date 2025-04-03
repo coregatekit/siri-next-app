@@ -12,7 +12,6 @@
 			"dist",
 			"build",
 			".next",
-			"components",
 			"public",
 			"prisma"
 		]
