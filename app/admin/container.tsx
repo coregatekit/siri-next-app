@@ -8,7 +8,7 @@ function AdminContainer() {
 
 	return (
 		<div className='flex flex-col items-center justify-start min-h-screen bg-gray-100'>
-			<div className='mt-24 p-8 rounded-2xl w-3/4 h-3/4 bg-slate-200'>
+			<div className='mt-24 p-8 w-3/4 h-3/4 '>
 				<Header user={user} />
 				<MenuTabs />
 			</div>
