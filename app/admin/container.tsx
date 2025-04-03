@@ -1,7 +1,22 @@
-import React from 'react';
+import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
+import Header from './components/header';
+import MenuTabs from './components/menu-tabs';
 
 function AdminContainer() {
-	return <div>AdminContainer</div>;
+	const [user, setUser] = useState<string>('Admin');
+
+	return (
+		<div className='flex flex-col items-center justify-start min-h-screen bg-gray-100'>
+			<div className='mt-24 p-8 rounded-2xl w-3/4 h-3/4 bg-slate-200'>
+				<Header user={user} />
+				<MenuTabs />
+			</div>
+			<div>
+				<Button className='mt-4'>Logout</Button>
+			</div>
+		</div>
+	);
 }
 
 export default AdminContainer;
