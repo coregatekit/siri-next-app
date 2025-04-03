@@ -15,14 +15,14 @@ datasource db {
 }
 
 model Employee {
-  id String @id @default(cuid(2))
-  username String @unique
-  password String
-  name String
-  email String @unique
-  phone String @unique
-  mobile String? @db.VarChar(10)
-  is_set_pw Boolean @default(false)
+  id         String   @id @default(cuid(2))
+  username   String   @unique
+  password   String
+  name       String
+  email      String   @unique
+  phone      String   @unique
+  mobile     String?  @db.VarChar(10)
+  is_set_pw  Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -30,11 +30,11 @@ model Employee {
 }
 
 model Customer {
-  id String @id @default(cuid(2))
-  name String
-  email String? @unique
-  mobile String @unique @db.VarChar(10)
-  gender String @db.VarChar(6)
+  id         String   @id @default(cuid(2))
+  name       String
+  email      String?  @unique
+  mobile     String   @unique @db.VarChar(10)
+  gender     String   @db.VarChar(6)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -42,55 +42,55 @@ model Customer {
 }
 
 model Room {
-  id String @id @default(cuid(2))
-  number String
-  is_available Boolean @default(true)
-  type_id String
-  type Type @relation(fields: [type_id], references: [id], onDelete: NoAction)
+  id              String   @id @default(cuid(2))
+  number          String
+  is_available    Boolean  @default(true)
+  type_id         String
+  type            Type     @relation(fields: [type_id], references: [id], onDelete: NoAction)
   price_per_night Float
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
 
   Booking Booking[]
 }
 
 model Type {
-  id String @id @default(cuid(2))
-  name String
-  detail String?
-  rooms Room[]
+  id         String   @id @default(cuid(2))
+  name       String
+  detail     String?
+  rooms      Room[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
 
 model Booking {
-  id String @id @default(cuid(2))
-  customer_id String
-  customer Customer @relation(fields: [customer_id], references: [id], onDelete: NoAction)
-  employee_id String
-  employee Employee @relation(fields: [employee_id], references: [id], onDelete: NoAction)
-  room_id String
-  room Room @relation(fields: [room_id], references: [id], onDelete: NoAction)
-  payment_id String @unique
-  payment Payment @relation(fields: [payment_id], references: [id], onDelete: Cascade)
-  stay_duration Int
-  check_in_date DateTime
+  id             String   @id @default(cuid(2))
+  customer_id    String
+  customer       Customer @relation(fields: [customer_id], references: [id], onDelete: NoAction)
+  employee_id    String
+  employee       Employee @relation(fields: [employee_id], references: [id], onDelete: NoAction)
+  room_id        String
+  room           Room     @relation(fields: [room_id], references: [id], onDelete: NoAction)
+  payment_id     String   @unique
+  payment        Payment  @relation(fields: [payment_id], references: [id], onDelete: Cascade)
+  stay_duration  Int
+  check_in_date  DateTime
   check_out_date DateTime
-  status String @db.VarChar(10)
-  total_price Float
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  status         String   @db.VarChar(10)
+  total_price    Float
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
 }
 
 model Payment {
-  id String @id @default(cuid(2))
-  booking Booking?
-  status String @db.VarChar(10)
+  id          String    @id @default(cuid(2))
+  booking     Booking?
+  status      String    @db.VarChar(10)
   total_price Float
-  discount Float
-  total_paid Float
-  paid_method String @db.VarChar(10)
-  paid_date DateTime?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  discount    Float
+  total_paid  Float
+  paid_method String    @db.VarChar(10)
+  paid_date   DateTime?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 }
