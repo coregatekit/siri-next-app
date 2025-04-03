@@ -38,21 +38,21 @@ function LoginContainer() {
 	};
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+		<div className='flex flex-col items-center justify-center min-h-screen bg-gray-100'>
 			<Form {...loginForm}>
 				<form
 					onSubmit={loginForm.handleSubmit(onSubmit)}
-					className="w-full max-w-sm p-4 bg-white rounded shadow-md"
+					className='w-full max-w-sm p-4 bg-white rounded shadow-md'
 				>
-					<h1 className="my-4 text-xl">Login</h1>
-					<div className="flex flex-col gap-4">
+					<h1 className='my-4 text-xl'>Login</h1>
+					<div className='flex flex-col gap-4'>
 						<FormField
 							control={loginForm.control}
-							name="username"
+							name='username'
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input placeholder="Username" {...field} />
+										<Input placeholder='Username' {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -60,17 +60,17 @@ function LoginContainer() {
 						/>
 						<FormField
 							control={loginForm.control}
-							name="password"
+							name='password'
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input type="password" placeholder="Password" {...field} />
+										<Input type='password' placeholder='Password' {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
-						<Button type="submit">Login</Button>
+						<Button type='submit'>Login</Button>
 					</div>
 				</form>
 			</Form>
