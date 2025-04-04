@@ -1,0 +1,29 @@
+{
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 2,
+    "editor.autoClosingQuotes": "languageDefined"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 2,
+    "editor.autoClosingQuotes": "languageDefined"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 2,
+    "editor.autoClosingQuotes": "languageDefined"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 2,
+    "editor.autoClosingQuotes": "languageDefined"
+  }
+}
