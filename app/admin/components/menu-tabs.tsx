@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TabsContent } from '@radix-ui/react-tabs';
 import React from 'react';
 import CreateUserForm from './create-user-form';
-import UserList from './user-list';
+import UserList from './user-list/user-list';
 
 function MenuTabs() {
 	return (

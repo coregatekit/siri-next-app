@@ -3,7 +3,7 @@
 import type { Employee } from '@/app/types/employees';
 import type { ColumnDef } from '@tanstack/react-table';
 
-export const columns: ColumnDef<Employee>[] = [
+export const EmployeeColumn: ColumnDef<Employee>[] = [
 	{
 		accessorKey: 'id',
 		header: 'ID',
