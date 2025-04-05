@@ -62,9 +62,30 @@ export class EmployeeService {
 				const errorMessage = error.message;
 				throw new Error(errorMessage);
 			}
-      return Promise.reject(
-        'Unexpected error occurred while creating employee',
-      );
+			return Promise.reject(
+				'Unexpected error occurred while creating employee',
+			);
+		}
+	}
+
+	async getAllEmployees(): Promise<EmployeeData[]> {
+		try {
+			const employees = await this.prisma.employee.findMany();
+
+			return employees.map((employee) => ({
+				id: employee.id,
+				username: employee.username,
+				name: employee.name,
+				email: employee.email,
+				mobile: employee.mobile,
+				isAdmin: employee.is_admin,
+				isSetPw: employee.is_set_pw,
+				createdAt: employee.created_at,
+				updatedAt: employee.updated_at,
+			})) as unknown as EmployeeData[];
+		} catch (error) {
+			console.error('Error fetching employees:', error);
+			throw new Error('Failed to fetch employees');
 		}
 	}
 }
