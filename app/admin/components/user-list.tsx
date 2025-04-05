@@ -1,8 +1,6 @@
 import type { Employee } from '@/app/types/employees';
-import { Card } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
-import React from 'react';
-import { EmployeeColumn } from './columns';
+import { EmployeeColumn } from './user-list-columns';
 
 const mockEmployeeData: Employee[] = [
 	{
