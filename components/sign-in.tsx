@@ -9,6 +9,7 @@ import { Button } from './ui/button';
 import type { SignInFormData } from '@/app/types/sign-in';
 
 type Props = {
+  title: string;
 	handleSignIn: (data: SignInFormData) => void;
 };
 
@@ -21,7 +22,7 @@ const SignInFormSchema = z.object({
 		.min(8, { message: 'Password must be at least 8 characters long' }),
 });
 
-function SignInBox({ handleSignIn }: Props) {
+function SignInBox({ title, handleSignIn }: Props) {
 	const form = useForm<z.infer<typeof SignInFormSchema>>({
 		resolver: zodResolver(SignInFormSchema),
 		defaultValues: {
@@ -41,7 +42,7 @@ function SignInBox({ handleSignIn }: Props) {
 					onSubmit={form.handleSubmit(onSubmit)}
 					className='w-full max-w-sm p-4 bg-white rounded shadow-md'
 				>
-					<h1 className='my-4 text-xl'>Sign-in</h1>
+					<h1 className='my-4 text-xl'>{title}</h1>
 					<div className='flex flex-col gap-4'>
 						<FormField
 							control={form.control}

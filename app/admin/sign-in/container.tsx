@@ -10,7 +10,7 @@ function AdminLoginContainer() {
 		console.log('Admin login data:', data);
 	};
 
-	return <SignInBox handleSignIn={handleAdminSignIn} />;
+	return <SignInBox title='Administrator Sign-in' handleSignIn={handleAdminSignIn} />;
 }
 
 export default AdminLoginContainer;

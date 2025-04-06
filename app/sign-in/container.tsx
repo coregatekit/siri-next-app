@@ -9,7 +9,7 @@ function SignInContainer() {
 		// Handle login logic here
 	};
 
-	return <SignInBox handleSignIn={handleSignIn} />;
+	return <SignInBox title='Sign-in' handleSignIn={handleSignIn} />;
 }
 
 export default SignInContainer;
