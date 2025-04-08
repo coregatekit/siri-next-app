@@ -15,82 +15,82 @@ datasource db {
 }
 
 model Employee {
-  id         String   @id @default(cuid(2))
-  username   String   @unique
-  password   String
-  name       String
-  email      String   @unique
-  mobile     String?  @db.VarChar(10)
-  is_set_pw  Boolean  @default(false)
-  is_admin   Boolean  @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id        String   @id @default(cuid(2))
+  username  String   @unique
+  password  String
+  name      String
+  email     String   @unique
+  mobile    String?  @db.VarChar(10)
+  isSetPw   Boolean  @default(false) @map("is_set_pw")
+  isAdmin   Boolean  @default(false) @map("is_admin")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   Booking Booking[]
 }
 
 model Customer {
-  id         String   @id @default(cuid(2))
-  name       String
-  email      String?  @unique
-  mobile     String   @unique @db.VarChar(10)
-  gender     String   @db.VarChar(6)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id        String   @id @default(cuid(2))
+  name      String
+  email     String?  @unique
+  mobile    String   @unique @db.VarChar(10)
+  gender    String   @db.VarChar(6)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   Booking Booking[]
 }
 
 model Room {
-  id              String   @id @default(cuid(2))
-  number          String
-  is_available    Boolean  @default(true)
-  type_id         String
-  type            Type     @relation(fields: [type_id], references: [id], onDelete: NoAction)
-  price_per_night Float
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
+  id            String   @id @default(cuid(2))
+  number        String
+  isAvailable   Boolean  @default(true) @map("is_available")
+  typeId        String   @map("type_id")
+  type          Type     @relation(fields: [typeId], references: [id], onDelete: NoAction)
+  pricePerNight Float    @map("price_per_night")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   Booking Booking[]
 }
 
 model Type {
-  id         String   @id @default(cuid(2))
-  name       String
-  detail     String?
-  rooms      Room[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id        String   @id @default(cuid(2))
+  name      String
+  detail    String?
+  rooms     Room[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 }
 
 model Booking {
-  id             String   @id @default(cuid(2))
-  customer_id    String
-  customer       Customer @relation(fields: [customer_id], references: [id], onDelete: NoAction)
-  employee_id    String
-  employee       Employee @relation(fields: [employee_id], references: [id], onDelete: NoAction)
-  room_id        String
-  room           Room     @relation(fields: [room_id], references: [id], onDelete: NoAction)
-  payment_id     String   @unique
-  payment        Payment  @relation(fields: [payment_id], references: [id], onDelete: Cascade)
-  stay_duration  Int
-  check_in_date  DateTime
-  check_out_date DateTime
-  status         String   @db.VarChar(10)
-  total_price    Float
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  id           String   @id @default(cuid(2))
+  customerId   String   @map("customer_id")
+  customer     Customer @relation(fields: [customerId], references: [id], onDelete: NoAction)
+  employeeId   String   @map("employee_id")
+  employee     Employee @relation(fields: [employeeId], references: [id], onDelete: NoAction)
+  roomId       String   @map("room_id")
+  room         Room     @relation(fields: [roomId], references: [id], onDelete: NoAction)
+  paymentId    String   @unique @map("payment_id")
+  payment      Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  stayDuration Int      @map("stay_duration")
+  checkInDate  DateTime @map("check_in_date")
+  checkOutDate DateTime @map("check_out_date")
+  status       String   @db.VarChar(10)
+  totalPrice   Float    @map("total_price")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
 }
 
 model Payment {
-  id          String    @id @default(cuid(2))
-  booking     Booking?
-  status      String    @db.VarChar(10)
-  total_price Float
-  discount    Float
-  total_paid  Float
-  paid_method String    @db.VarChar(10)
-  paid_date   DateTime?
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
+  id         String    @id @default(cuid(2))
+  booking    Booking?
+  status     String    @db.VarChar(10)
+  totalPrice Float     @map("total_price")
+  discount   Float
+  totalPaid  Float     @map("total_paid")
+  paidMethod String    @map("paid_method") @db.VarChar(10)
+  paidDate   DateTime? @map("paid_date")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
 }
