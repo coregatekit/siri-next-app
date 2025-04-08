@@ -53,8 +53,8 @@ export class EmployeeService {
 				name: employee.name,
 				email: employee.email,
 				mobile: employee.mobile,
-				createdAt: employee.created_at,
-				updatedAt: employee.updated_at,
+				createdAt: employee.createdAt,
+				updatedAt: employee.updatedAt,
 			} as unknown as EmployeeData;
 		} catch (error: unknown) {
 			console.error('Error creating employee:', error);
@@ -78,10 +78,10 @@ export class EmployeeService {
 				name: employee.name,
 				email: employee.email,
 				mobile: employee.mobile,
-				isAdmin: employee.is_admin,
-				isSetPw: employee.is_set_pw,
-				createdAt: employee.created_at,
-				updatedAt: employee.updated_at,
+				isAdmin: employee.isAdmin,
+				isSetPw: employee.isSetPw,
+				createdAt: employee.createdAt,
+				updatedAt: employee.updatedAt,
 			})) as unknown as EmployeeData[];
 		} catch (error) {
 			console.error('Error fetching employees:', error);

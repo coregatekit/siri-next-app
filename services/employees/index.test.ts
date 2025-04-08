@@ -35,10 +35,10 @@ describe('Employee Service', () => {
 			name: 'Test User',
 			email: 'test@example.com',
 			mobile: '0991112234',
-			is_set_pw: false,
-			is_admin: false,
-			created_at: new Date(),
-			updated_at: new Date(),
+			isSetPw: false,
+			isAdmin: false,
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		};
 
 		it('should create an employee successfully', async () => {
@@ -59,8 +59,8 @@ describe('Employee Service', () => {
 				name: mockCreatedEmployee.name,
 				email: mockCreatedEmployee.email,
 				mobile: mockCreatedEmployee.mobile,
-				createdAt: mockCreatedEmployee.created_at,
-				updatedAt: mockCreatedEmployee.updated_at,
+				createdAt: mockCreatedEmployee.createdAt,
+				updatedAt: mockCreatedEmployee.updatedAt,
 			};
 
 			expect(result).toEqual(expectedResponse);
