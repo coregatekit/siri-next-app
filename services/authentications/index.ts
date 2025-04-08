@@ -15,6 +15,18 @@ export class AuthenticationService implements IAuthenticationService {
 	}
 
 	async signIn(username: string, password: string): Promise<string | null> {
-		return '';
+		try {
+			// Find employee by username
+			const employee =
+				await this.employeeService.findEmployeeByUsername(username);
+      
+			return '';
+		} catch (error: unknown) {
+			console.error('Error signing in:', error);
+			if (error instanceof Error) {
+				throw new Error(error.message);
+			}
+			throw new Error('Unknown error occurred');
+		}
 	}
 }

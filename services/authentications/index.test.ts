@@ -17,17 +17,26 @@ describe('Authentication Service', () => {
 		service = new AuthenticationService(employeeService, encryptionService);
 	});
 
-  describe('signIn', () => {
-    it('should return token when credentials are valid', async () => {
-      // Arrange
-      const username = 'testuser';
-      const password = 'testpassword';
+	describe('signIn', () => {
+		it('should return token when credentials are valid', async () => {
+			// Arrange
+			const username = 'testuser';
+			const password = 'testpassword';
+			employeeService.findEmployeeByUsername = jest.fn().mockResolvedValue({
+				id: '123',
+				username: 'testuser',
+				password: 'hashedpassword',
+				name: 'Test User',
+			});
 
-      // Act
-      const result = await service.signIn(username, password);
+			// Act
+			const result = await service.signIn(username, password);
 
-      // Assert
-      expect(result).toBe('');
-    });
-  })
+			// Assert
+			expect(result).toBe('');
+			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
+				username,
+			);
+		});
+	});
 });
