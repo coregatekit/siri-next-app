@@ -20,6 +20,10 @@ export class AuthenticationService implements IAuthenticationService {
 			const employee =
 				await this.employeeService.findEmployeeByUsername(username);
       
+      if (!employee) {
+        throw new Error('Employee not found');
+      }
+      
 			return '';
 		} catch (error: unknown) {
 			console.error('Error signing in:', error);

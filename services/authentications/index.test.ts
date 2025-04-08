@@ -38,5 +38,22 @@ describe('Authentication Service', () => {
 				username,
 			);
 		});
+
+		it('should throw error when employee not found', async () => {
+			// Arrange
+			const username = 'nonexistentuser';
+			const password = 'testpassword';
+			employeeService.findEmployeeByUsername = jest
+				.fn()
+				.mockResolvedValue(null);
+
+			// Act & Assert
+			await expect(service.signIn(username, password)).rejects.toThrow(
+				'Employee not found',
+			);
+			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
+				username,
+			);
+		});
 	});
 });
