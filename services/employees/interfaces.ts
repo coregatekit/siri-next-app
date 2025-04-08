@@ -1,4 +1,12 @@
-export interface CreateEmployeeData {
+import type { Employee } from '@prisma/client';
+
+interface IEmployeeService {
+	createEmployee(data: CreateEmployeeData): Promise<EmployeeData>;
+	getAllEmployees(): Promise<EmployeeData[]>;
+	findEmployeeByUsername(username: string): Promise<Employee | null>;
+}
+
+interface CreateEmployeeData {
 	username: string;
 	password: string;
 	name: string;
@@ -6,7 +14,7 @@ export interface CreateEmployeeData {
 	mobile?: string;
 }
 
-export interface EmployeeData {
+interface EmployeeData {
 	id: number;
 	username: string;
 	name: string;
@@ -15,3 +23,5 @@ export interface EmployeeData {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export type { IEmployeeService, CreateEmployeeData, EmployeeData };

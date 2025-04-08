@@ -1,8 +1,8 @@
-import type { PrismaClient } from '@prisma/client';
-import type { CreateEmployeeData, EmployeeData } from './interfaces';
+import type { Employee, PrismaClient } from '@prisma/client';
+import type { CreateEmployeeData, EmployeeData, IEmployeeService } from './interfaces';
 import type { EncryptionService } from '../encryptions';
 
-export class EmployeeService {
+export class EmployeeService implements IEmployeeService {
 	private readonly prisma: PrismaClient;
 	private readonly encryptionService: EncryptionService;
 
@@ -86,6 +86,20 @@ export class EmployeeService {
 		} catch (error) {
 			console.error('Error fetching employees:', error);
 			throw new Error('Failed to fetch employees');
+		}
+	}
+
+	async findEmployeeByUsername(username: string): Promise<Employee | null> {
+		try {
+			const employee = await this.prisma.employee.findFirst({
+				where: {
+					username: username,
+				},
+			});
+			return employee;
+		} catch (error) {
+			console.error('Error finding employee by username:', error);
+			throw new Error('Failed to find employee');
 		}
 	}
 }

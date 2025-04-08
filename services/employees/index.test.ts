@@ -1,4 +1,4 @@
-import type { PrismaClient } from '@prisma/client';
+import type { Employee, PrismaClient } from '@prisma/client';
 import { EmployeeService } from '.';
 import { type DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import type { EncryptionService } from '../encryptions';
@@ -226,6 +226,68 @@ describe('Employee Service', () => {
 			await expect(service.getAllEmployees()).rejects.toThrow(
 				'Failed to fetch employees',
 			);
+		});
+	});
+
+	describe('findEmployeeByUsername', () => {
+		it('should return an employee from the database succesfully', async () => {
+			// Arrange
+			const username = 'testuser';
+			const resultEmployee: Employee = {
+				id: '123123123',
+				username: 'testuser',
+				password: 'hashedpassword',
+				name: 'Test User',
+				email: 'tester1@coregate.dev',
+				mobile: '0991112234',
+				isSetPw: true,
+				isAdmin: true,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
+			prisma.employee.findFirst.mockResolvedValue(resultEmployee);
+
+			// Act
+			const result = await service.findEmployeeByUsername(username);
+
+			// Assert
+			expect(prisma.employee.findFirst).toHaveBeenCalledWith({
+				where: {
+					username,
+				},
+			});
+			const expected = {
+				...resultEmployee,
+			};
+			expect(result).toEqual(expected);
+		});
+
+		it('should return null if employee is not found', async () => {
+			// Arrange
+			const username = 'nonexistentuser';
+			prisma.employee.findFirst.mockResolvedValue(null);
+
+			// Act
+			const result = await service.findEmployeeByUsername(username);
+
+			// Assert
+			expect(prisma.employee.findFirst).toHaveBeenCalledWith({
+				where: {
+					username,
+				},
+			});
+			expect(result).toBeNull();
+		});
+
+		it('should throw an error if fetching employee fails', async () => {
+			// Arrange
+			const username = 'testuser';
+			prisma.employee.findFirst.mockRejectedValue(new Error('Database error'));
+
+			// Act & Assert
+			await expect(
+				service.findEmployeeByUsername(username),
+			).rejects.toThrow('Failed to find employee');
 		});
 	});
 });
