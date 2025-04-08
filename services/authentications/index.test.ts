@@ -22,12 +22,14 @@ describe('Authentication Service', () => {
 			// Arrange
 			const username = 'testuser';
 			const password = 'testpassword';
+			const hashedPassword = 'hashedpassword';
 			employeeService.findEmployeeByUsername = jest.fn().mockResolvedValue({
 				id: '123',
 				username: 'testuser',
-				password: 'hashedpassword',
+				password: hashedPassword,
 				name: 'Test User',
 			});
+			encryptionService.verifyPassword = jest.fn().mockResolvedValue(true);
 
 			// Act
 			const result = await service.signIn(username, password);
@@ -36,6 +38,10 @@ describe('Authentication Service', () => {
 			expect(result).toBe('');
 			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
 				username,
+			);
+			expect(encryptionService.verifyPassword).toHaveBeenCalledWith(
+				password,
+				hashedPassword,
 			);
 		});
 
@@ -53,6 +59,32 @@ describe('Authentication Service', () => {
 			);
 			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
 				username,
+			);
+		});
+
+		it('should throw error when password is invalid', async () => {
+			// Arrange
+			const username = 'testuser';
+			const password = 'testpassword';
+			const hashedPassword = 'hashedpassword';
+			employeeService.findEmployeeByUsername = jest.fn().mockResolvedValue({
+				id: '123',
+				username: 'testuser',
+				password: hashedPassword,
+				name: 'Test User',
+			});
+			encryptionService.verifyPassword = jest.fn().mockResolvedValue(false);
+
+			// Act & Assert
+			await expect(service.signIn(username, password)).rejects.toThrow(
+				'Invalid password',
+			);
+			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
+				username,
+			);
+			expect(encryptionService.verifyPassword).toHaveBeenCalledWith(
+				password,
+				hashedPassword,
 			);
 		});
 	});

@@ -23,6 +23,12 @@ export class AuthenticationService implements IAuthenticationService {
       if (!employee) {
         throw new Error('Employee not found');
       }
+
+      // Verify password
+      const isPasswordValid = await this.encryptionService.verifyPassword(password, employee.password)
+      if (!isPasswordValid) {
+        throw new Error('Invalid password');
+      }
       
 			return '';
 		} catch (error: unknown) {
