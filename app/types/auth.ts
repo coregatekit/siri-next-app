@@ -1,7 +1,8 @@
-type SessionPayload = {
-  id: string;
-  username: string;
-  name: string;
-}
+type JwtPayload = {
+	id: string;
+	username: string;
+	name: string;
+};
+type SessionPayload = JwtPayload & {};
 
-export type { SessionPayload };
+export type { JwtPayload, SessionPayload };

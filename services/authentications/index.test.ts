@@ -35,7 +35,7 @@ describe('Authentication Service', () => {
 			const result = await service.signIn(username, password);
 
 			// Assert
-			expect(result).toBe('');
+			expect(result).toBeTruthy();
 			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
 				username,
 			);
