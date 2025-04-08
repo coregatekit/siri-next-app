@@ -1,5 +1,6 @@
 import * as argon2 from 'argon2';
 import { EncryptionService } from '.';
+import type { IEncryptionService } from './interfaces';
 
 jest.mock('argon2', () => ({
 	hash: jest.fn(),
@@ -8,7 +9,7 @@ jest.mock('argon2', () => ({
 }));
 
 describe('EncryptionService', () => {
-	let service: EncryptionService;
+	let service: IEncryptionService;
 
 	beforeEach(() => {
 		jest.clearAllMocks();

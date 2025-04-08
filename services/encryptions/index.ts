@@ -1,7 +1,7 @@
 import * as argon2 from 'argon2';
-import type { HashOptions } from './interfaces';
+import type { HashOptions, IEncryptionService } from './interfaces';
 
-export class EncryptionService {
+export class EncryptionService implements IEncryptionService {
 	private readonly options: HashOptions;
 
 	constructor() {

@@ -2,13 +2,14 @@ import type { Employee, PrismaClient } from '@prisma/client';
 import { EmployeeService } from '.';
 import { type DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import type { EncryptionService } from '../encryptions';
+import type { IEmployeeService } from './interfaces';
 
 jest.mock('@prisma/client', () => ({
 	PrismaClient: jest.fn(),
 }));
 
 describe('Employee Service', () => {
-	let service: EmployeeService;
+	let service: IEmployeeService;
 	let prisma: DeepMockProxy<PrismaClient>;
 	let encryptionService: DeepMockProxy<EncryptionService>;
 
