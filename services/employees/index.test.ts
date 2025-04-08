@@ -180,4 +180,52 @@ describe('Employee Service', () => {
 			expect(encryptionService.hashPassword).toHaveBeenCalled();
 		});
 	});
+
+	describe('getAllEmployees', () => {
+		it('should return all employees', async () => {
+			// Arrange
+			prisma.employee.findMany.mockResolvedValue([
+				{
+					id: '123123123',
+					username: 'testuser',
+					password: 'hashedpassword',
+					name: 'Test User',
+					email: 'tester1@coregate.dev',
+					mobile: '0991112234',
+					isSetPw: false,
+					isAdmin: false,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					id: '9023749350',
+					username: 'testuser2',
+					password: 'hashedpassword',
+					name: 'Test User 2',
+					email: 'tester2@coregate.dev',
+					mobile: '0922303234',
+					isSetPw: false,
+					isAdmin: false,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+			]);
+
+			// Act
+			const result = await service.getAllEmployees();
+
+			// Assert
+			expect(result.length).toEqual(2);
+		});
+
+		it('should throw an error if fetching employees fails', async () => {
+			// Arrange
+			prisma.employee.findMany.mockRejectedValue(new Error('Database error'));
+
+			// Act & Assert
+			await expect(service.getAllEmployees()).rejects.toThrow(
+				'Failed to fetch employees',
+			);
+		});
+	});
 });
