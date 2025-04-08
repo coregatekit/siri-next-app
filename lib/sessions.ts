@@ -1,5 +1,5 @@
 import { jwtVerify, SignJWT } from 'jose';
-import type { SessionPayload } from './definitions';
+import type { SessionPayload } from '@/app/types/auth';
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
