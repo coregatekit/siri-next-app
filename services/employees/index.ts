@@ -1,14 +1,14 @@
 import type { Employee, PrismaClient } from '@prisma/client';
 import type { CreateEmployeeData, EmployeeData, IEmployeeService } from './interfaces';
-import type { EncryptionService } from '../encryptions';
+import type { IEncryptionService } from '../encryptions/interfaces';
 
 export class EmployeeService implements IEmployeeService {
 	private readonly prisma: PrismaClient;
-	private readonly encryptionService: EncryptionService;
+	private readonly encryptionService: IEncryptionService;
 
 	constructor(
 		prismaClient: PrismaClient,
-		encryptionService: EncryptionService,
+		encryptionService: IEncryptionService,
 	) {
 		this.prisma = prismaClient;
 		this.encryptionService = encryptionService;
