@@ -1,7 +1,7 @@
 'use client';
 
 import { z } from 'zod';
-import React from 'react';
+import React, { useActionState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -13,15 +13,27 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { login } from '@/app/actions/authentications';
 
-const LoginFormSchema = z.object({
+export const LoginFormSchema = z.object({
 	username: z
 		.string()
 		.min(6, { message: 'Username must be at least 6 characters long' }),
 	password: z
 		.string()
-		.min(8, { message: 'Password must be at least 8 characters long' }),
+		.min(8, { message: 'Password must be at least 8 characters long' })
+		.trim(),
 });
+
+export type LoginFormState =
+	| {
+			errors: {
+				username?: string[] | undefined;
+				password?: string[] | undefined;
+			};
+	  }
+	| { errors: string; }
+	| undefined;
 
 function LoginContainer() {
 	const form = useForm<z.infer<typeof LoginFormSchema>>({
@@ -32,13 +44,20 @@ function LoginContainer() {
 		},
 	});
 
-	const onSubmit = (data: z.infer<typeof LoginFormSchema>) => {};
+	const [_, action, pending] = useActionState(login, undefined);
+
+	const handleAction = async (data: z.infer<typeof LoginFormSchema>) => {
+		const formData = new FormData();
+		formData.append('username', data.username);
+		formData.append('password', data.password);
+		action(formData);
+	};
 
 	return (
 		<div className='flex flex-col items-center justify-center min-h-screen bg-gray-100'>
 			<Form {...form}>
 				<form
-					onSubmit={form.handleSubmit(onSubmit)}
+					onSubmit={form.handleSubmit(handleAction)}
 					className='w-full max-w-sm p-4 bg-white rounded shadow-md'
 				>
 					<h1 className='my-4 text-xl'>Login</h1>
@@ -67,7 +86,7 @@ function LoginContainer() {
 								</FormItem>
 							)}
 						/>
-						<Button type='submit'>Sign in</Button>
+						<Button type='submit' disabled={pending}>Sign in</Button>
 					</div>
 				</form>
 			</Form>
