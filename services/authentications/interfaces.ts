@@ -1,5 +1,11 @@
 interface IAuthenticationService {
-  signIn(username: string, password: string): Promise<string>;
+  signIn(username: string, password: string): Promise<SignInResult>;
 }
 
-export type { IAuthenticationService };
+interface SignInResult {
+  success: boolean;
+  message: string;
+  accessToken?: string;
+}
+
+export type { IAuthenticationService, SignInResult };

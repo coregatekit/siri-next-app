@@ -1,7 +1,7 @@
 import type { JwtPayload, SessionPayload } from '@/app/types/auth';
 import type { IEmployeeService } from '../employees/interfaces';
 import type { IEncryptionService } from '../encryptions/interfaces';
-import type { IAuthenticationService } from './interfaces';
+import type { IAuthenticationService, SignInResult } from './interfaces';
 import { sign } from 'jsonwebtoken';
 import { JWT_SECRET } from '@/commons/constants';
 
@@ -17,14 +17,17 @@ export class AuthenticationService implements IAuthenticationService {
 		this.employeeService = employeeService;
 	}
 
-	async signIn(username: string, password: string): Promise<string> {
+	async signIn(username: string, password: string): Promise<SignInResult> {
 		try {
 			// Find employee by username
 			const employee =
 				await this.employeeService.findEmployeeByUsername(username);
 
 			if (!employee) {
-				throw new Error('Employee not found');
+				return {
+					success: false,
+					message: 'Employee not found',
+				}
 			}
 
 			// Verify password
@@ -33,7 +36,10 @@ export class AuthenticationService implements IAuthenticationService {
 				employee.password,
 			);
 			if (!isPasswordValid) {
-				throw new Error('Invalid password');
+				return {
+					success: false,
+					message: 'Invalid password',
+				}
 			}
 
 			const payload: JwtPayload = {
@@ -45,7 +51,11 @@ export class AuthenticationService implements IAuthenticationService {
 				expiresIn: '1h',
 			});
 
-			return accessToken;
+			return {
+				success: true,
+				message: 'Sign in successful',
+				accessToken,
+			};
 		} catch (error: unknown) {
 			console.error('Error signing in:', error);
 			if (error instanceof Error) {

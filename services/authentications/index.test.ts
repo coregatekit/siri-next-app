@@ -36,6 +36,7 @@ describe('Authentication Service', () => {
 
 			// Assert
 			expect(result).toBeTruthy();
+			expect(result.success).toBe(true);
 			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
 				username,
 			);
@@ -53,10 +54,13 @@ describe('Authentication Service', () => {
 				.fn()
 				.mockResolvedValue(null);
 
-			// Act & Assert
-			await expect(service.signIn(username, password)).rejects.toThrow(
-				'Employee not found',
-			);
+			// Act
+			const result = await service.signIn(username, password);
+
+			// Assert
+			expect(result).toBeTruthy();
+			expect(result.success).toBe(false);
+			expect(result.message).toBe('Employee not found');
 			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
 				username,
 			);
@@ -75,10 +79,13 @@ describe('Authentication Service', () => {
 			});
 			encryptionService.verifyPassword = jest.fn().mockResolvedValue(false);
 
-			// Act & Assert
-			await expect(service.signIn(username, password)).rejects.toThrow(
-				'Invalid password',
-			);
+			// Act
+			const result = await service.signIn(username, password);
+
+			// Assert
+			expect(result).toBeTruthy();
+			expect(result.success).toBe(false);
+			expect(result.message).toBe('Invalid password');
 			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
 				username,
 			);
