@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma';
+import { getPrismaClient } from '@/lib/prisma';
 import { EmployeeService } from '@/services/employees';
 import { EncryptionService } from '@/services/encryptions';
 import { type NextRequest, NextResponse } from 'next/server';
@@ -6,7 +6,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest, response: NextResponse) {
 	try {
 		const employeeService = new EmployeeService(
-			prisma,
+			getPrismaClient(),
 			new EncryptionService(),
 		);
 		const employees = await employeeService.getAllEmployees();

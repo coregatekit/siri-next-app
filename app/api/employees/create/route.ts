@@ -1,10 +1,10 @@
-import prisma from '@/lib/prisma';
 import { type NextRequest, NextResponse } from 'next/server';
 
 import { EmployeeService } from '@/services/employees';
 import { EncryptionService } from '@/services/encryptions';
 import type { CreateEmployeeData } from '@/services/employees/interfaces';
 import { z } from 'zod';
+import { getPrismaClient } from '@/lib/prisma';
 
 const CreateUserFormSchema = z.object({
 	username: z
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
 		};
 
 		const employeeService = new EmployeeService(
-			prisma,
+			getPrismaClient(),
 			new EncryptionService(),
 		);
 		const newEmployee =
