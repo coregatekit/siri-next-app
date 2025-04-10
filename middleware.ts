@@ -6,18 +6,18 @@ import { jwtVerify } from 'jose';
 export async function middleware(request: NextRequest) {
 	const token = request.cookies.get('token')?.value;
 	const path = request.nextUrl.pathname;
-  console.log('current path: ', path);
+	console.log('current path: ', path);
 
 	// Check if path is protected
-	const isProtectedRoute = ProtectedRoutes.some((route) => path === route ||
-		path.startsWith(`${route}/`),
+	const isProtectedRoute = ProtectedRoutes.some(
+		(route) => path === route || path.startsWith(`${route}/`),
 	);
 
 	// Check if path is auth route
 	const isAuthRoute = AuthRoutes.some((route) => path === route);
 
-  console.log('isProtectedRoute:', isProtectedRoute);
-  console.log('isAuthRoute:', isAuthRoute);
+	console.log('isProtectedRoute:', isProtectedRoute);
+	console.log('isAuthRoute:', isAuthRoute);
 	try {
 		if (!token && isProtectedRoute) {
 			return NextResponse.redirect(new URL('/sign-in', request.url));
@@ -44,3 +44,18 @@ export async function middleware(request: NextRequest) {
 
 	return NextResponse.next();
 }
+
+// Configure which routes to apply the middleware to
+export const config = {
+	matcher: [
+		/*
+		 * Match all paths except for:
+		 * - API routes
+		 * - Static files
+		 * - _next/static (static files)
+		 * - _next/image (image optimization files)
+		 * - favicon.ico (favicon file)
+		 */
+		'/((?!api|_next/static|_next/image|images|favicon.ico).*)',
+	],
+};
