@@ -6,7 +6,6 @@ import { jwtVerify } from 'jose';
 export async function middleware(request: NextRequest) {
 	const token = request.cookies.get('token')?.value;
 	const path = request.nextUrl.pathname;
-	console.log('current path: ', path);
 
 	// Check if path is protected
 	const isProtectedRoute = ProtectedRoutes.some(
@@ -16,8 +15,6 @@ export async function middleware(request: NextRequest) {
 	// Check if path is auth route
 	const isAuthRoute = AuthRoutes.some((route) => path === route);
 
-	console.log('isProtectedRoute:', isProtectedRoute);
-	console.log('isAuthRoute:', isAuthRoute);
 	try {
 		if (!token && isProtectedRoute) {
 			return NextResponse.redirect(new URL('/sign-in', request.url));
