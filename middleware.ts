@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { AuthRoutes, ProtectedRoutes } from './lib/paths';
 import { JWT_SECRET } from './commons/constants';
 import { jwtVerify } from 'jose';
+import Routes from './commons/routes';
 
 export async function middleware(request: NextRequest) {
 	const token = request.cookies.get('token')?.value;
@@ -17,7 +18,7 @@ export async function middleware(request: NextRequest) {
 
 	try {
 		if (!token && isProtectedRoute) {
-			return NextResponse.redirect(new URL('/sign-in', request.url));
+			return NextResponse.redirect(new URL(Routes.LOGIN, request.url));
 		}
 
 		if (token) {
@@ -27,12 +28,12 @@ export async function middleware(request: NextRequest) {
 
 			// If verified and on auth route, redirect to root path
 			if (isAuthRoute) {
-				return NextResponse.redirect(new URL('/', request.url));
+				return NextResponse.redirect(new URL(Routes.HOME, request.url));
 			}
 		}
 	} catch (error) {
 		if (isProtectedRoute) {
-			const response = NextResponse.redirect(new URL('/sign-in', request.url));
+			const response = NextResponse.redirect(new URL(Routes.LOGIN, request.url));
 			response.cookies.delete('token');
 			response.cookies.delete('user');
 			return response;
