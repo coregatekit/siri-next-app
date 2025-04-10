@@ -1,10 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { EmployeeService } from '@/services/employees';
-import { EncryptionService } from '@/services/encryptions';
 import type { CreateEmployeeData } from '@/services/employees/interfaces';
 import { z } from 'zod';
-import { getPrismaClient } from '@/lib/prisma';
+import { getEmployeeService } from '@/lib/service';
 
 const CreateUserFormSchema = z.object({
 	username: z
@@ -34,10 +32,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
 			mobile: validatedData.mobile,
 		};
 
-		const employeeService = new EmployeeService(
-			getPrismaClient(),
-			new EncryptionService(),
-		);
+		const employeeService = getEmployeeService();
 		const newEmployee =
 			await employeeService.createEmployee(createEmployeeData);
 
