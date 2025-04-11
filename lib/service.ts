@@ -5,10 +5,13 @@ import { EncryptionService } from '@/services/encryptions';
 import type { IEncryptionService } from '@/services/encryptions/interfaces';
 import { closePrismaClient, getPrismaClient } from './prisma';
 import { AuthenticationService } from '@/services/authentications';
+import type { ITodoService } from '@/services/todos/interfaces';
+import { TodoService } from '@/services/todos';
 
 let encryptionServie: IEncryptionService | null = null;
 let employeeService: IEmployeeService | null = null;
 let authServie: IAuthenticationService | null = null;
+let todoService: ITodoService | null = null;
 
 /**
  * Get an EncryptionService instance.
@@ -50,12 +53,24 @@ export function getAuthenticationService(): IAuthenticationService {
 }
 
 /**
+ * Get a TodoService instance.
+ * @returns {ITodoService} The TodoService instance.
+ */
+export function getTodoService(): ITodoService {
+	if (!todoService) {
+		todoService = new TodoService(getPrismaClient());
+	}
+	return todoService;
+}
+
+/**
  * Close all services.
  * @returns {Promise<void>} A promise that resolves when all services are closed.
  */
 export async function closeServices(): Promise<void> {
-  await closePrismaClient();
-  encryptionServie = null;
-  employeeService = null;
-  authServie = null;
+	await closePrismaClient();
+	encryptionServie = null;
+	employeeService = null;
+	authServie = null;
+	todoService = null;
 }
