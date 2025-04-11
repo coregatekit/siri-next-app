@@ -14,8 +14,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { CreateTodoFormSchema } from '@/lib/definitions';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { redirect } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import type { z } from 'zod';
 
 function CreateTodoContainer() {
@@ -27,9 +29,16 @@ function CreateTodoContainer() {
 		},
 	});
 
-	const handleSubmtit = async (
-		data: z.infer<typeof CreateTodoFormSchema>,
-	) => createTodo(data);
+	const handleSubmtit = async (data: z.infer<typeof CreateTodoFormSchema>) => {
+		const result = await createTodo(data);
+		if (!result.success) {
+			toast.error(result.error);
+			return;
+		}
+		form.reset();
+		toast.success('Todo created successfully');
+		redirect('/todo');
+	};
 
 	return (
 		<div className='flex flex-col justify-center items-center gap-4 py-12'>
