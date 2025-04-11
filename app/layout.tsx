@@ -28,8 +28,10 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<NavBarWrapper />
-				{children}
+				<div className='flex flex-row min-h-screen'>
+					<NavBarWrapper />
+					{children}
+				</div>
 			</body>
 		</html>
 	);
