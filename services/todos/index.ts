@@ -1,5 +1,6 @@
 import type { PrismaClient, Todo } from '@prisma/client';
 import type { ITodoService } from './interfaces';
+import type { CreateTodo } from '@/app/types/todo';
 
 export class TodoService implements ITodoService {
 	private readonly prisma: PrismaClient;
@@ -11,5 +12,15 @@ export class TodoService implements ITodoService {
 	async getTodos(): Promise<Todo[]> {
 		const todos = await this.prisma.todo.findMany();
 		return todos;
+	}
+
+	async createTodo(todo: CreateTodo): Promise<Todo> {
+		const newTodo = await this.prisma.todo.create({
+			data: {
+				title: todo.title,
+				description: todo.description,
+			},
+		});
+    return newTodo;
 	}
 }
