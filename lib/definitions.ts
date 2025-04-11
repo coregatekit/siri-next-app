@@ -15,8 +15,8 @@ const CreateTodoFormSchema = z.object({
 		.string()
 		.min(1, { message: 'Title is required' })
 		.max(100, { message: 'Title must be less than 100 characters' })
-		.regex(/^[a-zA-Z0-9\s]*$/, {
-			message: 'Title must not contain special characters',
+		.regex(/^[a-zA-Z0-9\s\u0E00-\u0E7F]*$/, {
+			message: 'Title must contain only alphanumeric, Thai characters, and spaces',
 		}),
 	description: z
 		.string()
