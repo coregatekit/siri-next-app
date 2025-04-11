@@ -5,4 +5,10 @@ type JwtPayload = {
 };
 type SessionPayload = JwtPayload & {};
 
-export type { JwtPayload, SessionPayload };
+type UserData = {
+	id: string;
+	username: string;
+	name: string;
+}
+
+export type { JwtPayload, SessionPayload, UserData };
