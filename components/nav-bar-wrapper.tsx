@@ -24,24 +24,29 @@ function NavBarWrapper() {
 	}
 
 	return (
-		<nav className='flex bg-primary-foreground h-12 shadow-md'>
-			<div className='flex items-center justify-between w-full px-4'>
-				{/* Logo or Brand Name */}
-				<a href='/' className='text-xl font-bold text-gray-800'>
-					Siri Resort
-				</a>
+		<>
+			<nav className='fixed top-0 left-0 right-0 flex bg-primary-foreground h-16 shadow-md z-50'>
+				<div className='flex items-center justify-between w-full px-4'>
+					{/* Logo or Brand Name */}
+					<a href='/' className='text-xl font-bold text-gray-800'>
+						Siri Resort
+					</a>
 
-				<div>
-					{user ? (
-						<NavUser user={user} />
-					) : (
-						<Link href='/login'>
-							<Button>Login</Button>
-						</Link>
-					)}
+					<div>
+						{user ? (
+							<NavUser user={user} />
+						) : (
+							<Link href='/login'>
+								<Button>Login</Button>
+							</Link>
+						)}
+					</div>
 				</div>
-			</div>
-		</nav>
+			</nav>
+
+			{/* Add a spacer to prevent content from being hidden under the navbar */}
+			<div className='h-16' />
+		</>
 	);
 }
 

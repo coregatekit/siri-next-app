@@ -34,7 +34,7 @@ function NavUser({ user }: Props) {
 	return (
 		<div className='relative' ref={dropdownRef}>
 			<div
-				className='flex items-center gap-2 cursor-pointer py-2 px-3 hover:bg-gray-100 rounded-md'
+				className='flex items-center gap-2 cursor-pointer py-2 px-3 hover:bg-slate-200 rounded-md'
 				onClick={() => setIsOpen(!isOpen)}
 				onKeyDown={(e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
