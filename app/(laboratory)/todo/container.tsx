@@ -1,9 +1,12 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import type { Todo } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 function TodoContainer() {
+	const router = useRouter();
 	const [todos, setTodos] = useState<Todo[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -37,7 +40,10 @@ function TodoContainer() {
 
 	return (
 		<div className='flex flex-col items-stretch justify-center mt-8'>
-			<h1 className='text-3xl font-bold text-slate-700 px-12'>Todo list</h1>
+			<div className='flex justify-between items-center px-12'>
+				<h1 className='text-3xl font-bold text-slate-700'>Todo list</h1>
+				<Button className='cursor-pointer hover:bg-slate-700' onClick={() => router.push('/todo/create')}>Create new</Button>
+			</div>
 			<div>
 				{todos.length === 0 ? (
 					<p>No todos available</p>
