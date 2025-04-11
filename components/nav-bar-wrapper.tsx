@@ -4,15 +4,19 @@ import type { UserData } from '@/app/types/auth';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 import NavUser from './nav-user';
+import Link from 'next/link';
+import { Button } from './ui/button';
+
+const mockUser: UserData = {
+	id: 'ksadjfoiqpogjlasdf',
+	username: 'aerichandesu',
+	name: 'Uginaga Aeri',
+};
 
 function NavBarWrapper() {
 	const pathName = usePathname();
 	const excludedPaths = ['/sign-in', '/login'];
-	const [user, setUser] = useState<UserData>({
-		id: 'ksadjfoiqpogjlasdf',
-		username: 'aerichandesu',
-		name: 'Uginaga Aeri',
-	});
+	const [user, setUser] = useState<UserData>(mockUser);
 
 	if (excludedPaths.includes(pathName)) {
 		return null;
@@ -26,7 +30,15 @@ function NavBarWrapper() {
 					Siri Resort
 				</a>
 
-				<NavUser user={user} />
+				<div>
+					{user ? (
+						<NavUser user={user} />
+					) : (
+						<Link href='/login'>
+							<Button>Login</Button>
+						</Link>
+					)}
+				</div>
 			</div>
 		</nav>
 	);
