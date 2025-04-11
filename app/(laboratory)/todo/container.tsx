@@ -42,16 +42,21 @@ function TodoContainer() {
 		<div className='flex flex-col items-stretch justify-center mt-8'>
 			<div className='flex justify-between items-center px-12'>
 				<h1 className='text-3xl font-bold text-slate-700'>Todo list</h1>
-				<Button className='cursor-pointer hover:bg-slate-700' onClick={() => router.push('/todo/create')}>Create new</Button>
+				<Button
+					className='cursor-pointer hover:bg-slate-700'
+					onClick={() => router.push('/todo/create')}
+				>
+					Create new
+				</Button>
 			</div>
-			<div>
+			<div className='mt-6 flex flex-col'>
 				{todos.length === 0 ? (
 					<p>No todos available</p>
 				) : (
 					todos.map((todo) => (
 						<div
 							key={todo.id}
-							className='flex justify-between items-center px-12 p-4 border-b border-gray-300'
+							className='flex justify-between items-center px-12 p-4 border-b border-gray-300 cursor-pointer hover:bg-slate-100'
 						>
 							<div className='flex flex-row gap-4 justify-center items-center'>
 								<span className='text-lg font-bold text-slate-700'>
