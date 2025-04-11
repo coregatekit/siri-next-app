@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import NavUser from './nav-user';
 import Link from 'next/link';
 import { Button } from './ui/button';
+import Routes from '@/commons/routes';
 
 const mockUser: UserData = {
 	id: 'ksadjfoiqpogjlasdf',
@@ -15,7 +16,7 @@ const mockUser: UserData = {
 
 function NavBarWrapper() {
 	const pathName = usePathname();
-	const excludedPaths = ['/sign-in', '/login'];
+	const excludedPaths = [Routes.LOGIN.toString()];
 	const [user, setUser] = useState<UserData>(mockUser);
 
 	if (excludedPaths.includes(pathName)) {
