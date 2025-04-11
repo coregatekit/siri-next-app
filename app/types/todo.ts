@@ -1,6 +1,6 @@
 interface CreateTodo {
   title: string;
-  description: string;
+  description?: string;
 }
 
 export type { CreateTodo };

@@ -1,5 +1,6 @@
 'use client';
 
+import { createTodo } from '@/app/actions/todo';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -28,7 +29,7 @@ function CreateTodoContainer() {
 
 	const handleSubmtit = async (
 		data: z.infer<typeof CreateTodoFormSchema>,
-	) => {};
+	) => createTodo(data);
 
 	return (
 		<div className='flex flex-col justify-center items-center gap-4 py-12'>
