@@ -15,18 +15,17 @@ datasource db {
 }
 
 model Employee {
-  id        String   @id @default(cuid(2))
-  username  String   @unique
+  id        String    @id @default(cuid(2))
+  username  String    @unique
   password  String
   name      String
-  email     String   @unique
-  mobile    String?  @db.VarChar(10)
-  isSetPw   Boolean  @default(false) @map("is_set_pw")
-  isAdmin   Boolean  @default(false) @map("is_admin")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  Booking Booking[]
+  email     String    @unique
+  mobile    String?   @db.VarChar(10)
+  isSetPw   Boolean   @default(false) @map("is_set_pw")
+  isAdmin   Boolean   @default(false) @map("is_admin")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  Booking   Booking[]
 }
 
 model Customer {
@@ -93,4 +92,13 @@ model Payment {
   paidDate   DateTime? @map("paid_date")
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
+}
+
+model Todo {
+  id          String  @id @default(cuid(2))
+  title       String
+  description String?
+  done        Boolean @default(false)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 }
