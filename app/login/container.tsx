@@ -1,7 +1,7 @@
 'use client';
 
 import { z } from 'zod';
-import React, { useActionState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { login } from '@/app/actions/authentications';
 
 export const LoginFormSchema = z.object({
 	username: z
@@ -25,17 +24,7 @@ export const LoginFormSchema = z.object({
 		.trim(),
 });
 
-export type LoginFormState =
-	| {
-			errors: {
-				username?: string[] | undefined;
-				password?: string[] | undefined;
-			};
-	  }
-	| { errors: string; }
-	| undefined;
-
-function LoginContainer() {
+export default function LoginContainer() {
 	const form = useForm<z.infer<typeof LoginFormSchema>>({
 		resolver: zodResolver(LoginFormSchema),
 		defaultValues: {
@@ -44,13 +33,10 @@ function LoginContainer() {
 		},
 	});
 
-	const [_, action, pending] = useActionState(login, undefined);
-
 	const handleAction = async (data: z.infer<typeof LoginFormSchema>) => {
 		const formData = new FormData();
 		formData.append('username', data.username);
 		formData.append('password', data.password);
-		action(formData);
 	};
 
 	return (
@@ -86,12 +72,10 @@ function LoginContainer() {
 								</FormItem>
 							)}
 						/>
-						<Button type='submit' disabled={pending}>Sign in</Button>
+						<Button className='cursor-pointer' type='submit' disabled={false}>Sign in</Button>
 					</div>
 				</form>
 			</Form>
 		</div>
 	);
 }
-
-export default LoginContainer;
