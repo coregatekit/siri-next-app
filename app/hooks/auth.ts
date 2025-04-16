@@ -1,9 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function useAuth() {
 	const authRoute = '/api/auth/login';
+	const router = useRouter();
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -18,8 +20,18 @@ export default function useAuth() {
 
 			if (!response.ok) {
 				const errorData = await response.json();
-				throw new Error(errorData.message || 'Login failed');
+				console.log(errorData);
 			}
+
+			if (response.status === 301 || response.redirected) {
+				const redirectUrl = response.headers.get('Location');
+				console.log('Redirecting to:', redirectUrl);
+
+				router.push(redirectUrl || '/');
+				return;
+			}
+
+			router.push('/');
 		} catch (error: unknown) {
 			setError(
 				error instanceof Error ? error.message : 'An unknown error occurred',
