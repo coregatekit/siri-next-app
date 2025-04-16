@@ -5,15 +5,17 @@ import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import useAuth from '@/app/hooks/auth';
 
 type Props = {
 	user: UserData;
 };
 
 function NavUser({ user }: Props) {
-	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
+
+	const { logout } = useAuth();
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
@@ -30,6 +32,10 @@ function NavUser({ user }: Props) {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, []);
+
+	const handleLogout = async () => {
+		await logout();
+	};
 
 	return (
 		<div className='relative' ref={dropdownRef}>
@@ -71,7 +77,7 @@ function NavUser({ user }: Props) {
 					<button
 						type='button'
 						className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-						onClick={async () => router.push('/login')}
+						onClick={handleLogout}
 					>
 						Logout
 					</button>
