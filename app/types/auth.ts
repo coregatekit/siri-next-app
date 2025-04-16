@@ -9,4 +9,10 @@ type LoginResult = {
 	token?: string;
 }
 
-export type { LoginForm, LoginResult };
+type UserData = {
+	id: string;
+	username: string;
+	name: string;
+}
+
+export type { LoginForm, LoginResult, UserData };
