@@ -1,14 +1,12 @@
-type JwtPayload = {
-	id: string;
+type LoginForm = {
 	username: string;
-	name: string;
+	password: string;
 };
-type SessionPayload = JwtPayload & {};
 
-type UserData = {
-	id: string;
-	username: string;
-	name: string;
+type LoginResult = {
+	success: boolean;
+	message: string;
+	token?: string;
 }
 
-export type { JwtPayload, SessionPayload, UserData };
+export type { LoginForm, LoginResult };
