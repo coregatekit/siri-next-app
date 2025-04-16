@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import useAuth from '../hooks/auth';
 
 export const LoginFormSchema = z.object({
 	username: z
@@ -32,11 +33,10 @@ export default function LoginContainer() {
 			password: '',
 		},
 	});
+	const { login, isLoading, error } = useAuth();
 
 	const handleAction = async (data: z.infer<typeof LoginFormSchema>) => {
-		const formData = new FormData();
-		formData.append('username', data.username);
-		formData.append('password', data.password);
+		await login(data.username, data.password);
 	};
 
 	return (
@@ -48,6 +48,7 @@ export default function LoginContainer() {
 				>
 					<h1 className='my-4 text-xl'>Login</h1>
 					<div className='flex flex-col gap-4'>
+						{/* Username */}
 						<FormField
 							control={form.control}
 							name='username'
@@ -60,6 +61,8 @@ export default function LoginContainer() {
 								</FormItem>
 							)}
 						/>
+
+						{/* Password */}
 						<FormField
 							control={form.control}
 							name='password'
@@ -72,7 +75,18 @@ export default function LoginContainer() {
 								</FormItem>
 							)}
 						/>
-						<Button className='cursor-pointer' type='submit' disabled={false}>Sign in</Button>
+
+						{/* Error Message */}
+						{error && <div className='text-red-500 text-sm'>{error}</div>}
+
+						{/* Submit Button */}
+						<Button
+							className='cursor-pointer'
+							type='submit'
+							disabled={isLoading}
+						>
+							Sign in
+						</Button>
 					</div>
 				</form>
 			</Form>
