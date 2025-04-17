@@ -9,7 +9,7 @@ type Props = {
 
 export default function Menu({ menus }: Props) {
 	return (
-		<div className='flex flex-wrap w-4/6 justify-center'>
+		<div className='flex flex-wrap w-4/6 justify-start items-center'>
 			{menus.map((menu) => (
 				<Card
 					key={menu.name}
