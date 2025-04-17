@@ -47,6 +47,19 @@ const roomsManagementSidebars: TSidebarMenuItem[] = [
 	// },
 ];
 
+const systemManagementSidebars: TSidebarMenuItem[] = [
+	{
+		title: 'Users',
+		url: '/users',
+		icon: <span>👤</span>,
+	},
+	{
+		title: 'Settings',
+		url: '/settings',
+		icon: <span>⚙️</span>,
+	},
+];
+
 export default function AppSidebar() {
 	return (
 		<Sidebar>
@@ -60,7 +73,7 @@ export default function AppSidebar() {
 				{/* Room management Menu */}
 				<SidebarGroup>
 					<SidebarGroupLabel>
-						<span className=''>Room Managements</span>
+						<span>Room Management</span>
 					</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
@@ -76,7 +89,25 @@ export default function AppSidebar() {
 							))}
 						</SidebarMenu>
 					</SidebarGroupContent>
-          
+
+					{/* System Managements */}
+					<SidebarGroupContent>
+						<SidebarGroupLabel>
+							<span>System Management</span>
+						</SidebarGroupLabel>
+						<SidebarMenu>
+							{systemManagementSidebars.map((item) => (
+								<SidebarMenuItem key={item.title}>
+									<SidebarMenuButton asChild>
+										<Link href={item.url} className='flex items-center gap-2'>
+											{item.icon}
+											<span>{item.title}</span>
+										</Link>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							))}
+						</SidebarMenu>
+					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
 			<SidebarFooter />
