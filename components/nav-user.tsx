@@ -4,8 +4,10 @@ import type { UserData } from '@/app/types/auth';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import useAuth from '@/app/hooks/use-auth';
+import UserIcon from './icons/user';
+import SettingsIcon from './icons/settings';
+import LogoutIcon from './icons/logout';
 
 type Props = {
 	user: UserData;
@@ -61,7 +63,10 @@ function NavUser({ user }: Props) {
 						className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
 						onClick={() => setIsOpen(false)}
 					>
-						Profile
+						<div className='flex items-center gap-2'>
+							<UserIcon height={16} width={16} />
+							<span>Profile</span>
+						</div>
 					</Link>
 
 					<Link
@@ -69,17 +74,23 @@ function NavUser({ user }: Props) {
 						className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
 						onClick={() => setIsOpen(false)}
 					>
-						Settings
+						<div className='flex items-center gap-2'>
+							<SettingsIcon height={16} width={16} />
+							<span>Settings</span>
+						</div>
 					</Link>
 
 					<div className='border-t border-gray-100 my-1' />
 
 					<button
 						type='button'
-						className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+						className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer'
 						onClick={handleLogout}
 					>
-						Logout
+						<div className='flex items-center gap-2'>
+							<LogoutIcon height={16} width={16} />
+							<span>Logout</span>
+						</div>
 					</button>
 				</div>
 			)}
