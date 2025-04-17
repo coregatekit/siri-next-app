@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import useAuth from '../hooks/auth';
+import useAuth from '../hooks/use-auth';
 
 export const LoginFormSchema = z.object({
 	username: z

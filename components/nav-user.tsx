@@ -5,7 +5,7 @@ import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useAuth from '@/app/hooks/auth';
+import useAuth from '@/app/hooks/use-auth';
 
 type Props = {
 	user: UserData;
