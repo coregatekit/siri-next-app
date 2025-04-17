@@ -1,6 +1,6 @@
+import { EncryptionService } from '@/services/encryptions';
+import type { IEncryptionService } from '@/services/encryptions/interfaces';
 import argon2 from 'argon2';
-import { EncryptionService } from '.';
-import type { IEncryptionService } from './interfaces';
 
 jest.mock('argon2', () => ({
 	hash: jest.fn(),

@@ -1,8 +1,8 @@
+import { AuthenticationService } from '@/services/authentications';
+import type { IAuthenticationService } from '@/services/authentications/interfaces';
+import type { IEmployeeService } from '@/services/employees/interfaces';
+import type { IEncryptionService } from '@/services/encryptions/interfaces';
 import { mockDeep } from 'jest-mock-extended';
-import type { IEmployeeService } from '../employees/interfaces';
-import type { IEncryptionService } from '../encryptions/interfaces';
-import type { IAuthenticationService } from './interfaces';
-import { AuthenticationService } from '.';
 
 describe('Authentication Service', () => {
 	let service: IAuthenticationService;

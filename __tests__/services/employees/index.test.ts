@@ -1,8 +1,8 @@
-import type { Employee, PrismaClient } from '@prisma/client';
-import { EmployeeService } from '.';
+import { EmployeeService } from '@/services/employees';
+import type { IEmployeeService } from '@/services/employees/interfaces';
+import type { EncryptionService } from '@/services/encryptions';
+import type { PrismaClient, Employee } from '@prisma/client';
 import { type DeepMockProxy, mockDeep } from 'jest-mock-extended';
-import type { EncryptionService } from '../encryptions';
-import type { IEmployeeService } from './interfaces';
 
 jest.mock('@prisma/client', () => ({
 	PrismaClient: jest.fn(),
@@ -286,9 +286,9 @@ describe('Employee Service', () => {
 			prisma.employee.findFirst.mockRejectedValue(new Error('Database error'));
 
 			// Act & Assert
-			await expect(
-				service.findEmployeeByUsername(username),
-			).rejects.toThrow('Failed to find employee');
+			await expect(service.findEmployeeByUsername(username)).rejects.toThrow(
+				'Failed to find employee',
+			);
 		});
 	});
 });
