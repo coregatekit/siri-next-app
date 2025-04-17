@@ -102,6 +102,15 @@ describe('Todos Service', () => {
 		it('should delete a todo successfully', async () => {
 			// Arrange
 			const todoId = '1';
+			prisma.todo.findFirst.mockResolvedValue({
+				id: todoId,
+				title: 'Todo 1',
+				description: 'Description 1',
+				done: false,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			});
+
 			prisma.todo.delete.mockResolvedValue({
 				id: todoId,
 				title: 'Todo 1',
@@ -123,7 +132,24 @@ describe('Todos Service', () => {
 				createdAt: expect.any(Date),
 				updatedAt: expect.any(Date),
 			});
+			expect(prisma.todo.findFirst).toHaveBeenCalledWith({
+				where: { id: todoId },
+			});
 			expect(prisma.todo.delete).toHaveBeenCalledWith({
+				where: { id: todoId },
+			});
+		});
+
+		it('should thow an error if todo not found', async () => {
+			// Arrange
+			const todoId = '1';
+			prisma.todo.findFirst.mockResolvedValue(null);
+
+			// Act & Assert
+			await expect(service.deleteTodo(todoId)).rejects.toThrow(
+				'Todo not found',
+			);
+			expect(prisma.todo.findFirst).toHaveBeenCalledWith({
 				where: { id: todoId },
 			});
 		});
