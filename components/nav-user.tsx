@@ -8,6 +8,7 @@ import useAuth from '@/app/hooks/use-auth';
 import UserIcon from './icons/user';
 import SettingsIcon from './icons/settings';
 import LogoutIcon from './icons/logout';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 type Props = {
 	user: UserData;
@@ -50,6 +51,10 @@ function NavUser({ user }: Props) {
 					}
 				}}
 			>
+				<Avatar>
+					<AvatarImage src={user.avatar} />
+					<AvatarFallback><UserIcon /></AvatarFallback>
+				</Avatar>
 				<div className='font-medium'>{user.username}</div>
 				<div>
 					<HamburgerMenuIcon />

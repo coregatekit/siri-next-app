@@ -12,6 +12,7 @@ const mockUser: UserData = {
 	id: 'ksadjfoiqpogjlasdf',
 	username: 'aerichandesu',
 	name: 'Uginaga Aeri',
+	avatar: 'https://github.com/shadcn.png',
 };
 
 function NavBarWrapper() {

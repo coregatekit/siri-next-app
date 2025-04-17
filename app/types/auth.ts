@@ -13,6 +13,7 @@ type UserData = {
 	id: string;
 	username: string;
 	name: string;
+	avatar: string;
 }
 
 export type { LoginForm, LoginResult, UserData };
