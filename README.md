@@ -14,6 +14,10 @@ POSTGRES_DB=siri_resort
 DATABASE_URL="postgresql://siri:B3_my_LITTLE_s3cr3t@localhost:5432/siri_resort"
 ```
 
+## Note
+
+For now we will use some basic authentication. And it will be replace with `next-auth` later.
+
 ## Project Entities
 
 ![Resort Entity Relationship Diagram](./docs/siri_resort_entities_v3.png)
