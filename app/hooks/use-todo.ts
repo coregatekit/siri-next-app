@@ -1,5 +1,6 @@
 import type { Todo } from '@prisma/client';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 export default function useTodo() {
 	const [todos, setTodos] = useState<Todo[]>([]);
@@ -24,5 +25,27 @@ export default function useTodo() {
 		});
 	}, []);
 
-	return { todos, loading };
+	const deleteTodo = async (id: string) => {
+		try {
+			const response = await fetch(`/api/todos?id=${id}`, {
+				method: 'DELETE',
+			});
+
+			if (!response.ok) {
+				const errMessage = await response.json();
+				throw new Error(errMessage.message);
+			}
+
+			const updatedTodos = todos.filter((todo) => todo.id !== id);
+			setTodos(updatedTodos);
+			toast.success('Todo deleted successfully');
+		} catch (error) {
+			console.error('Error deleting todo:', error);
+			toast.error(
+				error instanceof Error ? error.message : 'Failed to delete todo',
+			);
+		}
+	};
+
+	return { todos, loading, deleteTodo };
 }
