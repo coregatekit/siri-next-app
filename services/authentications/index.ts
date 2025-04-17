@@ -1,8 +1,7 @@
-import type { JwtPayload, SessionPayload } from '@/app/types/auth';
 import type { IEmployeeService } from '../employees/interfaces';
 import type { IEncryptionService } from '../encryptions/interfaces';
 import type { IAuthenticationService, SignInResult } from './interfaces';
-import { sign } from 'jsonwebtoken';
+import { type JwtPayload, sign } from 'jsonwebtoken';
 import { JWT_SECRET } from '@/commons/constants';
 
 export class AuthenticationService implements IAuthenticationService {
