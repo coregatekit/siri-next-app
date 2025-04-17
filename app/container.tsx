@@ -22,7 +22,7 @@ const menuItems: MenuItem[] = [
 		icon: <BedDoubleIcon className='text-primary' />,
 	},
 	{
-		name: 'Management',
+		name: 'Managements',
 		description: 'Manage the resort operations',
 		href: Routes.MANAGEMENT,
 		icon: <SlidersHorizontalIcon className='text-primary' />,
@@ -38,22 +38,6 @@ const menuItems: MenuItem[] = [
 		description: 'Manage your tasks',
 		href: Routes.TODO,
 		icon: <TodoListIcon className='text-primary' />,
-	},
-
-	{
-		name: 'Managementx',
-		description: 'Manage the resort operations',
-		href: Routes.MANAGEMENT,
-	},
-	{
-		name: 'Paymentsx',
-		description: 'Summarize the payments',
-		href: Routes.PAYMENTS,
-	},
-	{
-		name: 'Todox',
-		description: 'Manage your tasks',
-		href: Routes.TODO,
 	},
 ];
 

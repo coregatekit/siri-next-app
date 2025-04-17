@@ -1,7 +1,6 @@
 import React from 'react';
+import BookingContainer from './container';
 
-function Booking() {
-	return <div>Booking</div>;
+export default function Booking() {
+	return <BookingContainer />;
 }
-
-export default Booking;

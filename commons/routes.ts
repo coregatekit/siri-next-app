@@ -7,7 +7,7 @@ enum Routes {
   BOOKING = '/booking',
   ROOMS = '/rooms',
   PAYMENTS = '/payments',
-  MANAGEMENT = '/management',
+  MANAGEMENT = '/managements',
 }
 
 export default Routes;
