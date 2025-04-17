@@ -9,16 +9,15 @@ export async function GET(request: NextRequest, response: NextResponse) {
 			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 		}
 
-		return NextResponse.json(
-			{
-				id: 'mock',
-				username: 'aerichandesu',
+		const userData = {
+			id: 'mock',
+			username: 'aerichandesu',
+			name: 'Uchinaga Aeri',
+			avatar: 'https://github.com/shadcn.png',
+		};
+		cookieStore.set('user', JSON.stringify(userData));
 
-				name: 'Uchinaga Aeri',
-				avatar: 'https://github.com/shadcn.png',
-			},
-			{ status: 200 },
-		);
+		return NextResponse.json(userData, { status: 200 });
 	} catch (error) {
 		console.error('Error fetching user data:', error);
 		return NextResponse.json(
