@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import {
 	Sidebar,
@@ -13,6 +15,7 @@ import {
 } from './ui/sidebar';
 import type { SidebarMenuItem as TSidebarMenuItem } from '@/app/types/menu';
 import Link from 'next/link';
+import useAuth from '@/app/contexts/auth.context';
 
 const roomManagementSidebars: TSidebarMenuItem[] = [
 	{
@@ -59,6 +62,9 @@ const otherSidebars: TSidebarMenuItem[] = [
 ];
 
 export default function AppSidebar() {
+	const { isAuthenticated } = useAuth();
+
+	console.log('isAuthenticated', isAuthenticated);
 	return (
 		<Sidebar>
 			{/* Header */}
@@ -67,74 +73,94 @@ export default function AppSidebar() {
 			</SidebarHeader>
 			<div className='border-t border-slate-200 my-1' />
 
-			<SidebarContent>
-				{/* Room management Menu */}
-				<SidebarGroup>
-					<SidebarGroupLabel>
-						<span>Room Management</span>
-					</SidebarGroupLabel>
-					<SidebarGroupContent>
-						<SidebarMenu>
-							{roomManagementSidebars.map((item) => (
-								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
-										<Link href={item.url} className='flex items-center gap-2'>
-											{item.icon}
-											<span>{item.title}</span>
-										</Link>
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
-					</SidebarGroupContent>
+			{/* Sidebar Content */}
+			{isAuthenticated ? (
+				<AuthenticatedSidebar />
+			) : (
+				<SidebarContent>
+					<div className='flex flex-col items-center my-4'>
+						<span className='text-gray-500'>Please login to continue</span>
+					</div>
+				</SidebarContent>
+			)}
 
-					{/* System Managements */}
-					<SidebarGroupContent>
-						<SidebarGroupLabel>
-							<span>System Management</span>
-						</SidebarGroupLabel>
-						<SidebarMenu>
-							{systemManagementSidebars.map((item) => (
-								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
-										<Link href={item.url} className='flex items-center gap-2'>
-											{item.icon}
-											<span>{item.title}</span>
-										</Link>
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
-					</SidebarGroupContent>
-
-					{/* Other */}
-					<SidebarGroupContent>
-						<SidebarGroupLabel>
-							<span>Other</span>
-						</SidebarGroupLabel>
-						<SidebarMenu>
-							{otherSidebars.map((item) => (
-								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
-										<Link href={item.url} className='flex items-center gap-2'>
-											{item.icon}
-											<span>{item.title}</span>
-										</Link>
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
-					</SidebarGroupContent>
-				</SidebarGroup>
-			</SidebarContent>
+			{/* Footer */}
 
 			<SidebarFooter>
 				<div className='flex items-center justify-between p-4'>
 					<span className='text-sm text-gray-500'>
-						Develop by <Link href='https://coregate.dev' className='text-blue-400'>coregatekit</Link>
+						Develop by{' '}
+						<Link href='https://coregate.dev' className='text-blue-400'>
+							coregatekit
+						</Link>
 					</span>
 				</div>
 			</SidebarFooter>
 		</Sidebar>
 	);
 }
+
+const AuthenticatedSidebar = () => {
+	return (
+		<SidebarContent>
+			{/* Room management Menu */}
+			<SidebarGroup>
+				<SidebarGroupLabel>
+					<span>Room Management</span>
+				</SidebarGroupLabel>
+				<SidebarGroupContent>
+					<SidebarMenu>
+						{roomManagementSidebars.map((item) => (
+							<SidebarMenuItem key={item.title}>
+								<SidebarMenuButton asChild>
+									<Link href={item.url} className='flex items-center gap-2'>
+										{item.icon}
+										<span>{item.title}</span>
+									</Link>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
+						))}
+					</SidebarMenu>
+				</SidebarGroupContent>
+
+				{/* System Managements */}
+				<SidebarGroupContent>
+					<SidebarGroupLabel>
+						<span>System Management</span>
+					</SidebarGroupLabel>
+					<SidebarMenu>
+						{systemManagementSidebars.map((item) => (
+							<SidebarMenuItem key={item.title}>
+								<SidebarMenuButton asChild>
+									<Link href={item.url} className='flex items-center gap-2'>
+										{item.icon}
+										<span>{item.title}</span>
+									</Link>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
+						))}
+					</SidebarMenu>
+				</SidebarGroupContent>
+
+				{/* Other */}
+				<SidebarGroupContent>
+					<SidebarGroupLabel>
+						<span>Other</span>
+					</SidebarGroupLabel>
+					<SidebarMenu>
+						{otherSidebars.map((item) => (
+							<SidebarMenuItem key={item.title}>
+								<SidebarMenuButton asChild>
+									<Link href={item.url} className='flex items-center gap-2'>
+										{item.icon}
+										<span>{item.title}</span>
+									</Link>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
+						))}
+					</SidebarMenu>
+				</SidebarGroupContent>
+			</SidebarGroup>
+		</SidebarContent>
+	);
+};

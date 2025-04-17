@@ -3,12 +3,11 @@
 import {
 	createContext,
 	useContext,
-	useEffect,
 	useState,
 	type ReactNode,
 } from 'react';
 import type { UserData } from '../types/auth';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 type AuthContextType = {
 	isAuthenticated: boolean;
@@ -24,6 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const [user, setUser] = useState<UserData | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 	const router = useRouter();
 
 	const login = async (username: string, password: string) => {
@@ -47,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			if (userResponse.ok) {
 				const userData = await userResponse.json();
 				setUser(userData);
+        setIsAuthenticated(true);
 				router.push('/');
 			}
 		} catch (error: unknown) {
@@ -73,6 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			}
 
 			setUser(null);
+      setIsAuthenticated(false);
 			router.push('/login');
 		} catch (error: unknown) {
 			setError(
@@ -84,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	return (
 		<AuthContext.Provider
-			value={{ isAuthenticated: !!user, isLoading, error, login, logout }}
+			value={{ isAuthenticated, isLoading, error, login, logout }}
 		>
 			{children}
 		</AuthContext.Provider>
