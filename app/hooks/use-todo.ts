@@ -25,6 +25,30 @@ export default function useTodo() {
 		});
 	}, []);
 
+	const markAsDone = async (id: string) => {
+		try {
+			const response = await fetch(`/api/todos?id=${id}`, {
+				method: 'PATCH',
+			});
+
+			if (!response.ok) {
+				const errMessage = await response.json();
+				throw new Error(errMessage.message);
+			}
+
+			const updatedTodos = todos.map((todo) =>
+				todo.id === id ? { ...todo, done: true } : todo,
+			);
+			setTodos(updatedTodos);
+			toast.success('Todo marked as done successfully');
+		} catch (error) {
+			console.error('Error marking todo as done:', error);
+			toast.error(
+				error instanceof Error ? error.message : 'Failed to mark todo as done',
+			);
+		}
+	};
+
 	const deleteTodo = async (id: string) => {
 		try {
 			const response = await fetch(`/api/todos?id=${id}`, {
@@ -47,5 +71,5 @@ export default function useTodo() {
 		}
 	};
 
-	return { todos, loading, deleteTodo };
+	return { todos, loading, markAsDone, deleteTodo };
 }
