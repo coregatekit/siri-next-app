@@ -30,7 +30,10 @@ function CreateTodoContainer() {
 	});
 
 	const handleSubmtit = async (data: z.infer<typeof CreateTodoFormSchema>) => {
-		const result = await createTodo(data);
+		const result = await createTodo({
+			title: data.title,
+			description: data.description ?? null,
+		});
 		if (!result.success) {
 			toast.error(result.error);
 			return;
