@@ -14,7 +14,7 @@ import {
 import type { SidebarMenuItem as TSidebarMenuItem } from '@/app/types/menu';
 import Link from 'next/link';
 
-const roomsManagementSidebars: TSidebarMenuItem[] = [
+const roomManagementSidebars: TSidebarMenuItem[] = [
 	{
 		title: 'Dashboard',
 		url: '/dashboard',
@@ -30,21 +30,11 @@ const roomsManagementSidebars: TSidebarMenuItem[] = [
 		url: '/rooms',
 		icon: <span>🛏️</span>,
 	},
-	// {
-	// 	title: 'Managements',
-	// 	url: '/managements',
-	// 	icon: <span>📊</span>,
-	// },
-	// {
-	// 	title: 'Payments',
-	// 	url: '/payments',
-	// 	icon: <span>💰</span>,
-	// },
-	// {
-	// 	title: 'Todo',
-	// 	url: '/todo',
-	// 	icon: <span>📝</span>,
-	// },
+	{
+		title: 'Payments',
+		url: '/payments',
+		icon: <span>💰</span>,
+	},
 ];
 
 const systemManagementSidebars: TSidebarMenuItem[] = [
@@ -77,7 +67,7 @@ export default function AppSidebar() {
 					</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
-							{roomsManagementSidebars.map((item) => (
+							{roomManagementSidebars.map((item) => (
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
 										<Link href={item.url} className='flex items-center gap-2'>
