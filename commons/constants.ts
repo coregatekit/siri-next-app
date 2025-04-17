@@ -11,12 +11,14 @@ const DB_IDLE_TIMEOUT = 30000; // 30 seconds
 const DB_CONNECTION_TIMEOUT = 2000; // 2 seconds
 const DB_CONNECTION_STRING =
 	process.env.DATABASE_URL || 'postgres://user:password@localhost:5432/mydb';
+const DB_SCHEMA = process.env.DB_SCHEMA || 'public';
 
 export {
 	ONE_HOUR,
 	ONE_DAY,
 	ONE_WEEK,
 	JWT_SECRET,
+	DB_SCHEMA,
 	DB_POOL_MAX,
 	DB_IDLE_TIMEOUT,
 	DB_CONNECTION_TIMEOUT,

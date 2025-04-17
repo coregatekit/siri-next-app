@@ -3,6 +3,7 @@ import {
 	DB_CONNECTION_TIMEOUT,
 	DB_IDLE_TIMEOUT,
 	DB_POOL_MAX,
+	DB_SCHEMA,
 } from '@/commons/constants';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
@@ -21,7 +22,7 @@ function getPrismaClient(): PrismaClient {
 				allowExitOnIdle: true,
 			},
 			{
-				schema: 'public',
+				schema: DB_SCHEMA,
 			},
 		);
 		prismaClient = new PrismaClient({
