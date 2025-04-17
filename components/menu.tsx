@@ -13,7 +13,7 @@ export default function Menu({ menus }: Props) {
 			{menus.map((menu) => (
 				<Card
 					key={menu.name}
-					className=' w-52 h-48 m-4 p-4 bg-white shadow-md hover:shadow-xl transition-shadow duration-300'
+					className=' w-52 h-48 m-4 p-6 bg-white shadow-md hover:shadow-xl transition-shadow duration-300'
 				>
 					<Link
 						href={menu.href}
