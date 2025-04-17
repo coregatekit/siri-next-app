@@ -97,4 +97,35 @@ describe('Todos Service', () => {
 			});
 		});
 	});
+
+	describe('deleteTodo', () => {
+		it('should delete a todo successfully', async () => {
+			// Arrange
+			const todoId = '1';
+			prisma.todo.delete.mockResolvedValue({
+				id: todoId,
+				title: 'Todo 1',
+				description: 'Description 1',
+				done: false,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			});
+
+			// Act
+			const result = await service.deleteTodo(todoId);
+
+			// Assert
+			expect(result).toEqual({
+				id: todoId,
+				title: 'Todo 1',
+				description: 'Description 1',
+				done: false,
+				createdAt: expect.any(Date),
+				updatedAt: expect.any(Date),
+			});
+			expect(prisma.todo.delete).toHaveBeenCalledWith({
+				where: { id: todoId },
+			});
+		});
+	});
 });

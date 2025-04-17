@@ -21,6 +21,20 @@ export class TodoService implements ITodoService {
 				description: todo.description,
 			},
 		});
-    return newTodo;
+		return newTodo;
+	}
+
+	async deleteTodo(id: string): Promise<Todo> {
+		const deletedTodo = await this.prisma.todo.delete({
+			where: {
+				id,
+			},
+		});
+
+		if (!deletedTodo) {
+			throw new Error('Todo not found');
+		}
+
+		return deletedTodo;
 	}
 }

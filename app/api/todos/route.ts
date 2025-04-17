@@ -36,3 +36,30 @@ export async function POST(request: NextRequest, response: NextResponse) {
 		);
 	}
 }
+
+export async function DELETE(request: NextRequest, response: NextResponse) {
+	try {
+		const { searchParams } = new URL(request.url);
+		const id = searchParams.get('id');
+
+		if (!id) {
+			return NextResponse.json(
+				{ message: 'Todo id is required' },
+				{ status: 400 },
+			);
+		}
+
+		const todoService = getTodoService();
+		await todoService.deleteTodo(id);
+
+		return NextResponse.json({ message: 'Todo deleted successfully' }, { status: 200 });
+	} catch (error) {
+		if (error instanceof Error) {
+			return NextResponse.json({ message: error.message }, { status: 500 });
+		}
+		return NextResponse.json(
+			{ message: 'Internal server error' },
+			{ status: 500 },
+		);
+	}
+}
