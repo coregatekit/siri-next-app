@@ -50,6 +50,14 @@ const systemManagementSidebars: TSidebarMenuItem[] = [
 	},
 ];
 
+const otherSidebars: TSidebarMenuItem[] = [
+	{
+		title: 'Todo',
+		url: '/todo',
+		icon: <span>📝</span>,
+	},
+];
+
 export default function AppSidebar() {
 	return (
 		<Sidebar>
@@ -87,6 +95,25 @@ export default function AppSidebar() {
 						</SidebarGroupLabel>
 						<SidebarMenu>
 							{systemManagementSidebars.map((item) => (
+								<SidebarMenuItem key={item.title}>
+									<SidebarMenuButton asChild>
+										<Link href={item.url} className='flex items-center gap-2'>
+											{item.icon}
+											<span>{item.title}</span>
+										</Link>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							))}
+						</SidebarMenu>
+					</SidebarGroupContent>
+
+					{/* Other */}
+					<SidebarGroupContent>
+						<SidebarGroupLabel>
+							<span>Other</span>
+						</SidebarGroupLabel>
+						<SidebarMenu>
+							{otherSidebars.map((item) => (
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
 										<Link href={item.url} className='flex items-center gap-2'>
