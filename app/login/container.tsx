@@ -40,7 +40,7 @@ export default function LoginContainer() {
 	};
 
 	return (
-		<div className='flex flex-col items-center justify-center min-h-screen bg-gray-100'>
+		<div className='flex flex-col items-center justify-center w-full bg-gray-100'>
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(handleAction)}
