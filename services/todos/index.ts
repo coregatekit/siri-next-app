@@ -24,6 +24,23 @@ export class TodoService implements ITodoService {
 		return newTodo;
 	}
 
+	async markAsDone(id: string): Promise<Todo> {
+		const todo = await this.prisma.todo.findFirst({ where: { id } });
+		if (!todo) {
+			throw new Error('Todo not found');
+		}
+
+		const updatedTodo = await this.prisma.todo.update({
+			where: {
+				id,
+			},
+			data: {
+				done: true,
+			},
+		});
+		return updatedTodo;
+	}
+
 	async deleteTodo(id: string): Promise<Todo> {
 		const todo = await this.prisma.todo.findFirst({ where: { id } });
 		if (!todo) {

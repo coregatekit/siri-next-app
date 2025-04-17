@@ -98,6 +98,64 @@ describe('Todos Service', () => {
 		});
 	});
 
+	describe('markTodoAsDone', () => {
+		it('should mark a todo as done successfully', async () => {
+			// Arrange
+			const todoId = '1';
+			prisma.todo.findFirst.mockResolvedValue({
+				id: todoId,
+				title: 'Todo 1',
+				description: 'Description 1',
+				done: false,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			});
+
+			prisma.todo.update.mockResolvedValue({
+				id: todoId,
+				title: 'Todo 1',
+				description: 'Description 1',
+				done: true,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			});
+
+			// Act
+			const result = await service.markAsDone(todoId);
+
+			// Assert
+			expect(result).toEqual({
+				id: todoId,
+				title: 'Todo 1',
+				description: 'Description 1',
+				done: true,
+				createdAt: expect.any(Date),
+				updatedAt: expect.any(Date),
+			});
+			expect(prisma.todo.findFirst).toHaveBeenCalledWith({
+				where: { id: todoId },
+			});
+			expect(prisma.todo.update).toHaveBeenCalledWith({
+				where: { id: todoId },
+				data: { done: true },
+			});
+		});
+
+		it('should throw an error if todo not found', async () => {
+			// Arrange
+			const todoId = '1';
+			prisma.todo.findFirst.mockResolvedValue(null);
+
+			// Act & Assert
+			await expect(service.markAsDone(todoId)).rejects.toThrow(
+				'Todo not found',
+			);
+			expect(prisma.todo.findFirst).toHaveBeenCalledWith({
+				where: { id: todoId },
+			});
+		});
+	});
+
 	describe('deleteTodo', () => {
 		it('should delete a todo successfully', async () => {
 			// Arrange
