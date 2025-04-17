@@ -1,15 +1,5 @@
 import { z } from 'zod';
 
-type TodoFormState =
-	| {
-			errors?: {
-				title?: string[];
-        descriptions?: string[];
-			};
-			message?: string;
-	  }
-	| undefined;
-
 const CreateTodoFormSchema = z.object({
 	title: z
 		.string()
@@ -24,5 +14,4 @@ const CreateTodoFormSchema = z.object({
 		.optional(),
 });
 
-export type { TodoFormState };
 export { CreateTodoFormSchema };
