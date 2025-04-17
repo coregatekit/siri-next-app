@@ -15,10 +15,11 @@ import {
 	AlertDialogCancel,
 	AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { cn } from '@/lib/utils';
 
 function TodoContainer() {
 	const router = useRouter();
-	const { todos, loading, deleteTodo } = useTodo();
+	const { todos, loading, markAsDone, deleteTodo } = useTodo();
 
 	if (loading) {
 		return (
@@ -48,39 +49,89 @@ function TodoContainer() {
 							key={todo.id}
 							className='flex justify-between items-center px-12 p-4 border-b border-gray-300 cursor-pointer hover:bg-slate-100'
 						>
-							<div className='flex flex-row gap-4 justify-center items-center'>
+							<div
+								className={cn(
+									'flex flex-row gap-4 justify-center items-center',
+									todo.done ? 'opacity-50 line-through' : 'opacity-100',
+								)}
+							>
 								<span className='text-lg font-bold text-slate-700'>
 									{todo.title}
 								</span>
 								<span className='text-slate-500'>{todo.description}</span>
 							</div>
-							<AlertDialog>
-								<AlertDialogTrigger asChild>
-									<Button
-										variant='outline'
-										className='cursor-pointer hover:bg-red-100'
-									>
-										Delete
-									</Button>
-								</AlertDialogTrigger>
-								<AlertDialogContent>
-									<AlertDialogHeader>
-										<AlertDialogTitle>
-											Are you sure you want to delete this todo?
-										</AlertDialogTitle>
-										<AlertDialogDescription>
-											This action cannot be undone. This will permanently delete
-											your todo.
-										</AlertDialogDescription>
-									</AlertDialogHeader>
-									<AlertDialogFooter>
-										<AlertDialogCancel>Cancel</AlertDialogCancel>
-										<AlertDialogAction onClick={() => deleteTodo(todo.id)}>
-											Confirm
-										</AlertDialogAction>
-									</AlertDialogFooter>
-								</AlertDialogContent>
-							</AlertDialog>
+
+							{/* Action */}
+							<div className='flex flex-row gap-4'>
+								{/* Mark as Done */}
+								{todo.done ? null : (
+									<AlertDialog>
+										<AlertDialogTrigger asChild>
+											<Button
+												variant='outline'
+												className='cursor-pointer hover:bg-green-100'
+											>
+												Mark as Done
+											</Button>
+										</AlertDialogTrigger>
+										<AlertDialogContent>
+											<AlertDialogHeader>
+												<AlertDialogTitle>
+													Are you sure you want to mark this todo as done?
+												</AlertDialogTitle>
+												<AlertDialogDescription>
+													This will mark your todo as done.
+												</AlertDialogDescription>
+											</AlertDialogHeader>
+											<AlertDialogFooter>
+												<AlertDialogCancel className='cursor-pointer'>
+													Cancel
+												</AlertDialogCancel>
+												<AlertDialogAction
+													className='cursor-pointer'
+													onClick={() => markAsDone(todo.id)}
+												>
+													Confirm
+												</AlertDialogAction>
+											</AlertDialogFooter>
+										</AlertDialogContent>
+									</AlertDialog>
+								)}
+
+								{/* Delete */}
+								<AlertDialog>
+									<AlertDialogTrigger asChild>
+										<Button
+											variant='outline'
+											className='cursor-pointer hover:bg-red-100'
+										>
+											Delete
+										</Button>
+									</AlertDialogTrigger>
+									<AlertDialogContent>
+										<AlertDialogHeader>
+											<AlertDialogTitle>
+												Are you sure you want to delete this todo?
+											</AlertDialogTitle>
+											<AlertDialogDescription>
+												This action cannot be undone. This will permanently
+												delete your todo.
+											</AlertDialogDescription>
+										</AlertDialogHeader>
+										<AlertDialogFooter>
+											<AlertDialogCancel className='cursor-pointer'>
+												Cancel
+											</AlertDialogCancel>
+											<AlertDialogAction
+												className='cursor-pointer'
+												onClick={() => deleteTodo(todo.id)}
+											>
+												Confirm
+											</AlertDialogAction>
+										</AlertDialogFooter>
+									</AlertDialogContent>
+								</AlertDialog>
+							</div>
 						</div>
 					))
 				)}
