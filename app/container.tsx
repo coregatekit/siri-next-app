@@ -1,4 +1,35 @@
+import Menu from '@/components/menu';
 import React from 'react';
+import type { MenuItem } from './types/menu';
+import Routes from '@/commons/routes';
+
+const menuItems: MenuItem[] = [
+	{
+		name: 'Booking',
+		description: 'Book a room at Siri Resort',
+		href: Routes.BOOKING,
+	},
+	{
+		name: 'Rooms',
+		description: 'View available rooms',
+		href: Routes.ROOMS,
+	},
+	{
+		name: 'Management',
+		description: 'Manage the resort operations',
+		href: Routes.MANAGEMENT,
+	},
+	{
+		name: 'Payments',
+		description: 'Summarize the payments',
+		href: Routes.PAYMENTS,
+	},
+	{
+		name: 'Todo',
+		description: 'Manage your tasks',
+		href: Routes.TODO,
+	},
+];
 
 export default function HomeContainer() {
 	return (
@@ -9,6 +40,8 @@ export default function HomeContainer() {
 			<p className='text-slate-500'>
 				This is a sample application to demonstrate the usage of Next.js.
 			</p>
+
+			<Menu />
 		</div>
 	);
 }
