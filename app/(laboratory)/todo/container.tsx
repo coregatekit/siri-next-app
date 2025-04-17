@@ -64,7 +64,10 @@ function TodoContainer() {
 								</span>
 								<span className='text-slate-500'>{todo.description}</span>
 							</div>
-							<span>{todo.done ? '✅' : '❌'}</span>
+							{todo.done ?? <span>'✅'</span>}
+							<Button variant='outline' className='cursor-pointer hover:bg-red-100'>
+								Delete
+							</Button>
 						</div>
 					))
 				)}
