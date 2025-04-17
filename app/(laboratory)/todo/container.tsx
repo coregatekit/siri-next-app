@@ -4,10 +4,21 @@ import React from 'react';
 import useTodo from '@/app/hooks/use-todo';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTrigger,
+	AlertDialogCancel,
+	AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 function TodoContainer() {
 	const router = useRouter();
-	const { todos, loading } = useTodo();
+	const { todos, loading, deleteTodo } = useTodo();
 
 	if (loading) {
 		return (
@@ -43,13 +54,33 @@ function TodoContainer() {
 								</span>
 								<span className='text-slate-500'>{todo.description}</span>
 							</div>
-							{todo.done ?? <span>'✅'</span>}
-							<Button
-								variant='outline'
-								className='cursor-pointer hover:bg-red-100'
-							>
-								Delete
-							</Button>
+							<AlertDialog>
+								<AlertDialogTrigger asChild>
+									<Button
+										variant='outline'
+										className='cursor-pointer hover:bg-red-100'
+									>
+										Delete
+									</Button>
+								</AlertDialogTrigger>
+								<AlertDialogContent>
+									<AlertDialogHeader>
+										<AlertDialogTitle>
+											Are you sure you want to delete this todo?
+										</AlertDialogTitle>
+										<AlertDialogDescription>
+											This action cannot be undone. This will permanently delete
+											your todo.
+										</AlertDialogDescription>
+									</AlertDialogHeader>
+									<AlertDialogFooter>
+										<AlertDialogCancel>Cancel</AlertDialogCancel>
+										<AlertDialogAction onClick={() => deleteTodo(todo.id)}>
+											Confirm
+										</AlertDialogAction>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
 						</div>
 					))
 				)}
