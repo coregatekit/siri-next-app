@@ -9,4 +9,7 @@ Content-Type: application/json
   "password": "testest"
 }
 
-###kkk
+### Delete todo
+DELETE {{host}}/todos?id=aohg1j8ozkfecrpquuj9eezc  HTTP/1.1
+
+###
