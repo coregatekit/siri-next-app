@@ -127,7 +127,14 @@ export default function AppSidebar() {
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
-			<SidebarFooter />
+
+			<SidebarFooter>
+				<div className='flex items-center justify-between p-4'>
+					<span className='text-sm text-gray-500'>
+						Develop by <Link href='https://coregate.dev' className='text-blue-400'>coregatekit</Link>
+					</span>
+				</div>
+			</SidebarFooter>
 		</Sidebar>
 	);
 }
