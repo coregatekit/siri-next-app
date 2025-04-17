@@ -1,34 +1,13 @@
 'use client';
 
+import React from 'react';
+import useTodo from '@/app/hooks/use-todo';
 import { Button } from '@/components/ui/button';
-import type { Todo } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
 
 function TodoContainer() {
 	const router = useRouter();
-	const [todos, setTodos] = useState<Todo[]>([]);
-	const [loading, setLoading] = useState<boolean>(false);
-
-	useEffect(() => {
-		const fetchTodos = async () => {
-			setLoading(true);
-
-			const response = await fetch('/api/todos');
-			if (!response.ok) {
-				throw new Error('Failed to fetch todos');
-			}
-
-			const data = await response.json();
-			setTodos(data);
-			setLoading(false);
-		};
-
-		fetchTodos().catch((error) => {
-			console.error('Error fetching todos:', error);
-			setLoading(false);
-		});
-	}, []);
+	const { todos, loading } = useTodo();
 
 	if (loading) {
 		return (
@@ -65,7 +44,10 @@ function TodoContainer() {
 								<span className='text-slate-500'>{todo.description}</span>
 							</div>
 							{todo.done ?? <span>'✅'</span>}
-							<Button variant='outline' className='cursor-pointer hover:bg-red-100'>
+							<Button
+								variant='outline'
+								className='cursor-pointer hover:bg-red-100'
+							>
 								Delete
 							</Button>
 						</div>
