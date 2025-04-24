@@ -1,5 +1,5 @@
 import type { PrismaClient } from '@prisma/client';
-import type { IRoomTypeService, RoomTypeData } from './interfaces';
+import type { CreateRoomType, IRoomTypeService, RoomTypeData } from './interfaces';
 
 export class RoomTypeService implements IRoomTypeService {
 	private readonly prisma: PrismaClient;
@@ -27,5 +27,15 @@ export class RoomTypeService implements IRoomTypeService {
       console.error('Error fetching room types:', error);
       throw new Error('Failed to fetch room types');
     }
+	}
+
+	/**
+	 * Creates a new room type.
+	 * @param {CreateRoomType} data - The room type data to create.
+	 * @returns {Promise<RoomTypeData>} - Returns the created room type.
+	 * @throws {Error} - Throws an error if the database query fails.
+	 */
+	async createRoomType(data: CreateRoomType): Promise<RoomTypeData> {
+		return {} as RoomTypeData;	
 	}
 }

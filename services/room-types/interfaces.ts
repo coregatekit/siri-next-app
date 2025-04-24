@@ -1,5 +1,6 @@
 interface IRoomTypeService {
   getAllRoomTypes(): Promise<RoomTypeData[]>;
+  createRoomType(data: CreateRoomType): Promise<RoomTypeData>;
 }
 
 interface RoomTypeData {
@@ -10,4 +11,9 @@ interface RoomTypeData {
   updatedAt: Date;
 }
 
-export type { IRoomTypeService, RoomTypeData };
+interface CreateRoomType {
+  name: string;
+  detail?: string;
+}
+
+export type { IRoomTypeService, RoomTypeData, CreateRoomType };
