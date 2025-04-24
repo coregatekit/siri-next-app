@@ -21,7 +21,7 @@ import SidebarUser from './sidebar-user';
 const roomManagementSidebars: TSidebarMenuItem[] = [
 	{
 		title: 'Dashboard',
-		url: '/dashboard',
+		url: '/',
 		icon: <span>🏠</span>,
 	},
 	{
@@ -44,12 +44,12 @@ const roomManagementSidebars: TSidebarMenuItem[] = [
 const systemManagementSidebars: TSidebarMenuItem[] = [
 	{
 		title: 'Users',
-		url: '/users',
+		url: '/managements/users',
 		icon: <span>👤</span>,
 	},
 	{
 		title: 'Settings',
-		url: '/settings',
+		url: '/managements/settings',
 		icon: <span>⚙️</span>,
 	},
 ];
