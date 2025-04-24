@@ -3,7 +3,7 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from './ui/sidebar';
 import { DropdownMenu, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import useAuth from '@/app/contexts/auth.context';
-import { MoreVerticalIcon } from 'lucide-react';
+import { MoreVerticalIcon, UserIcon } from 'lucide-react';
 
 export default function SidebarUser() {
 	const { user } = useAuth();
@@ -16,7 +16,7 @@ export default function SidebarUser() {
 						<SidebarMenuButton size={'lg'} className='w-full'>
 							<Avatar>
 								<AvatarImage src={user?.avatar} alt={user?.name} />
-								<AvatarFallback>CN</AvatarFallback>
+								<AvatarFallback><UserIcon /></AvatarFallback>
 							</Avatar>
 							<div className='flex flex-col'>
 								<span className='truncate font-medium'>{user?.name}</span>
