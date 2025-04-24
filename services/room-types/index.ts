@@ -19,7 +19,7 @@ export class RoomTypeService implements IRoomTypeService {
 			return types.map((type) => ({
 				id: type.id,
 				name: type.name,
-				detail: type.detail || undefined,
+				detail: type.detail,
 				createdAt: type.createdAt,
 				updatedAt: type.updatedAt,
 			}));
@@ -47,7 +47,7 @@ export class RoomTypeService implements IRoomTypeService {
 			return {
 				id: newType.id,
 				name: newType.name,
-				detail: newType.detail || undefined,
+				detail: newType.detail,
 				createdAt: newType.createdAt,
 				updatedAt: newType.updatedAt,
 			};

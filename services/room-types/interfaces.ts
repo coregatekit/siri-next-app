@@ -6,7 +6,7 @@ interface IRoomTypeService {
 interface RoomTypeData {
   id: string;
   name: string;
-  detail?: string;
+  detail: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
