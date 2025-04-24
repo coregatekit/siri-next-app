@@ -33,11 +33,11 @@ const RoomTypesColumn: ColumnDef<RoomType>[] = [
 ];
 
 export default function ManageRoomTypes() {
-	const { roomTypeData } = useRoomTypes();
+	const { roomTypeData, isLoading } = useRoomTypes();
 
 	return (
 		<div className='rounded-md bg-white shadow-md'>
-			<DataTable columns={RoomTypesColumn} data={roomTypeData || []} />
+			<DataTable columns={RoomTypesColumn} data={roomTypeData || []} isLoading={isLoading} />
 		</div>
 	);
 }

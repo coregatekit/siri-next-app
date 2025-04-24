@@ -14,10 +14,12 @@ import {
 	TableHeader,
 	TableRow,
 } from './table';
+import { Skeleton } from './skeleton';
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
+	isLoading = false,
 }: DataTableProps<TData, TValue>) {
 	const table = useReactTable({
 		data,
@@ -46,28 +48,48 @@ export function DataTable<TData, TValue>({
 						</TableRow>
 					))}
 				</TableHeader>
-				<TableBody>
-					{table.getRowModel().rows.length ? (
-						table.getRowModel().rows.map((row) => (
-							<TableRow
-								key={row.id}
-								data-state={row.getIsSelected() && 'selected'}
-							>
+				{isLoading ? (
+					<TableBody>
+						{table.getRowModel().rows.map((row) => (
+							<TableRow key={row.id}>
 								{row.getVisibleCells().map((cell) => (
 									<TableCell key={cell.id}>
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+										<Skeleton className='w-full h-4' />
 									</TableCell>
 								))}
 							</TableRow>
-						))
-					) : (
-						<TableRow>
-							<TableCell colSpan={columns.length} className='h-24 text-center'>
-								No data available
-							</TableCell>
-						</TableRow>
-					)}
-				</TableBody>
+						))}
+					</TableBody>
+				) : (
+					<TableBody>
+						{table.getRowModel().rows.length ? (
+							table.getRowModel().rows.map((row) => (
+								<TableRow
+									key={row.id}
+									data-state={row.getIsSelected() && 'selected'}
+								>
+									{row.getVisibleCells().map((cell) => (
+										<TableCell key={cell.id}>
+											{flexRender(
+												cell.column.columnDef.cell,
+												cell.getContext(),
+											)}
+										</TableCell>
+									))}
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell
+									colSpan={columns.length}
+									className='h-24 text-center'
+								>
+									No data available
+								</TableCell>
+							</TableRow>
+						)}
+					</TableBody>
+				)}
 			</Table>
 		</div>
 	);
