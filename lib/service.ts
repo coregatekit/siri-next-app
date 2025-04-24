@@ -7,11 +7,14 @@ import { closePrismaClient, getPrismaClient } from './prisma';
 import { AuthenticationService } from '@/services/authentications';
 import type { ITodoService } from '@/services/todos/interfaces';
 import { TodoService } from '@/services/todos';
+import type { IRoomTypeService } from '@/services/room-types/interfaces';
+import { RoomTypeService } from '@/services/room-types';
 
 let encryptionServie: IEncryptionService | null = null;
 let employeeService: IEmployeeService | null = null;
 let authServie: IAuthenticationService | null = null;
 let todoService: ITodoService | null = null;
+let roomTypeService: IRoomTypeService | null = null;
 
 /**
  * Get an EncryptionService instance.
@@ -64,6 +67,17 @@ export function getTodoService(): ITodoService {
 }
 
 /**
+ * Get a RoomTypeService instance.
+ * @returns {IRoomTypeService} The RoomTypeService instance.
+ */
+export function getRoomTypeService(): IRoomTypeService {
+	if (!roomTypeService) {
+		roomTypeService = new RoomTypeService(getPrismaClient());
+	}
+	return roomTypeService;
+}
+
+/**
  * Close all services.
  * @returns {Promise<void>} A promise that resolves when all services are closed.
  */
@@ -73,4 +87,5 @@ export async function closeServices(): Promise<void> {
 	employeeService = null;
 	authServie = null;
 	todoService = null;
+	roomTypeService = null;
 }
