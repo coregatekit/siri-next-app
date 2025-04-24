@@ -68,7 +68,7 @@ describe('RoomType Service', () => {
 					detail: null,
 					createdAt: new Date(),
 					updatedAt: new Date(),
-				}
+				},
 			]);
 
 			// Act
@@ -95,6 +95,52 @@ describe('RoomType Service', () => {
 				'Failed to fetch room types',
 			);
 			expect(prisma.type.findMany).toHaveBeenCalled();
+		});
+	});
+
+	describe('createRoomType', () => {
+		it('should create a new room type', async () => {
+			// Arrange
+			const newRoomType = {
+				name: 'Suite Room',
+				detail: 'A luxurious suite with a separate living area.',
+			};
+			const createdRoomType = {
+				id: '3',
+				name: 'Suite Room',
+				detail: 'A luxurious suite with a separate living area.',
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
+
+			prisma.type.create.mockResolvedValue(createdRoomType);
+
+			// Act
+			const result = await service.createRoomType(newRoomType);
+
+			// Assert
+			expect(result).toEqual(createdRoomType);
+			expect(prisma.type.create).toHaveBeenCalledWith({
+				data: newRoomType,
+			});
+		});
+
+		it('should throw an error if creating room type fails', async () => {
+			// Arrange
+			const newRoomType = {
+				name: 'Suite Room',
+				detail: 'A luxurious suite with a separate living area.',
+			};
+			const errorMessage = 'Database error';
+			prisma.type.create.mockRejectedValue(new Error(errorMessage));
+
+			// Act & Assert
+			await expect(service.createRoomType(newRoomType)).rejects.toThrow(
+				'Failed to create room type',
+			);
+			expect(prisma.type.create).toHaveBeenCalledWith({
+				data: newRoomType,
+			});
 		});
 	});
 });
