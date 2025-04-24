@@ -5,6 +5,7 @@ import {
 	AccordionTrigger,
 } from '@/components/ui/accordion';
 import React from 'react';
+import ManageRoomTypes from './manage-room-types';
 
 export default function SystemManagementAccordion() {
 	return (
@@ -12,6 +13,7 @@ export default function SystemManagementAccordion() {
 			<AccordionItem value='item-1'>
 				<AccordionTrigger className='text-primary text-lg'>Room Types</AccordionTrigger>
 				<AccordionContent>
+          <ManageRoomTypes />
 				</AccordionContent>
 			</AccordionItem>
 		</Accordion>
