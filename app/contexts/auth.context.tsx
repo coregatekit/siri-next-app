@@ -15,6 +15,7 @@ type AuthContextType = {
 	error: string | null;
 	login: (username: string, password: string) => Promise<void>;
 	logout: () => Promise<void>;
+	checkAuth: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -84,9 +85,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}
 	};
 
+	const checkAuth = async () => {
+		setIsLoading(true);
+		try {
+			const userResponse = await fetch('/api/auth/me');
+			if (userResponse.ok) {
+				const userData = await userResponse.json();
+				setUser(userData);
+				setIsAuthenticated(true);
+			} else {
+				setUser(null);
+				setIsAuthenticated(false);
+			}
+		} catch (error: unknown) {
+			setUser(null);
+			setIsAuthenticated(false);
+			setError(
+				error instanceof Error ? error.message : 'An unknown error occurred'
+			);
+			console.error('Auth check error:', error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<AuthContext.Provider
-			value={{ isAuthenticated, isLoading, error, login, logout }}
+			value={{ isAuthenticated, isLoading, error, login, logout, checkAuth }}
 		>
 			{children}
 		</AuthContext.Provider>

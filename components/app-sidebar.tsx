@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Sidebar,
 	SidebarContent,
@@ -62,7 +62,12 @@ const otherSidebars: TSidebarMenuItem[] = [
 ];
 
 export default function AppSidebar() {
-	const { isAuthenticated } = useAuth();
+	const { isAuthenticated, checkAuth } = useAuth();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		checkAuth();
+	}, []);
 
 	console.log('isAuthenticated', isAuthenticated);
 	return (
