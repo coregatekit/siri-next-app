@@ -3,7 +3,6 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-	useSidebar,
 } from './ui/sidebar';
 import {
 	DropdownMenu,
@@ -16,8 +15,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import useAuth from '@/app/contexts/auth.context';
 import {
-	BellIcon,
-	CreditCardIcon,
 	LogOutIcon,
 	MoreVerticalIcon,
 	SettingsIcon,
