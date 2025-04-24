@@ -2,14 +2,16 @@ import React from 'react';
 import type { MenuItem } from '@/app/types/menu';
 import { Card } from './ui/card';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 type Props = {
 	menus: MenuItem[];
+	className?: string;
 };
 
-export default function Menu({ menus }: Props) {
+export default function Menu({ menus, className }: Props) {
 	return (
-		<div className='flex flex-wrap w-4/6 justify-start items-center'>
+		<div className={cn('flex flex-wrap w-4/6 justify-start items-center', className)}>
 			{menus.map((menu) => (
 				<Card
 					key={menu.name}
