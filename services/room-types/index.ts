@@ -8,6 +8,11 @@ export class RoomTypeService implements IRoomTypeService {
 		this.prisma = prismaClient;
 	}
 
+	/**
+	 * Retrieves all room types from the database.
+	 * @returns {Promise<RoomTypeData[]>} - Returns an array of room types.
+	 * @throws {Error} - Throws an error if the database query fails.
+	 */
 	async getAllRoomTypes(): Promise<RoomTypeData[]> {
 		try {
 			const types = await this.prisma.type.findMany();
