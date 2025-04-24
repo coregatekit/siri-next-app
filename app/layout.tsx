@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import AppSidebar from '@/components/app-sidebar';
 import { AuthProvider } from './contexts/auth.context';
+import AppQueryClientProvider from './providers/query-client.provider';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -32,11 +33,13 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
 				<AuthProvider>
-					<SidebarProvider>
-						<AppSidebar />
-						{children}
-					</SidebarProvider>
-					<Toaster />
+					<AppQueryClientProvider>
+						<SidebarProvider>
+							<AppSidebar />
+							{children}
+						</SidebarProvider>
+						<Toaster />
+					</AppQueryClientProvider>
 				</AuthProvider>
 			</body>
 		</html>
