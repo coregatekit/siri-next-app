@@ -88,14 +88,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const checkAuth = async () => {
 		setIsLoading(true);
 		try {
-			const userResponse = await fetch('/api/auth/me');
-			if (userResponse.ok) {
-				const userData = await userResponse.json();
-				setUser(userData);
-				setIsAuthenticated(true);
+			const cookies = document.cookie;
+			const userCookie = cookies.split('; ').find(row => row.startsWith('user='));
+
+			if (userCookie) {
+				try {
+					const userData = JSON.parse(decodeURIComponent(userCookie.split('=')[1]));
+					setUser(userData);
+					setIsAuthenticated(true);
+				} catch (error) {
+					// Invalid cookie format, proceed to fetch from API
+					await fetchUserFromAPI();
+				}
 			} else {
-				setUser(null);
-				setIsAuthenticated(false);
+				// No cookie found, fetch from API
+				await fetchUserFromAPI();
+			}
+
+			// Helper function to fetch user from API
+			async function fetchUserFromAPI() {
+				const userResponse = await fetch('/api/auth/me');
+				if (userResponse.ok) {
+					const userData = await userResponse.json();
+					setUser(userData);
+					setIsAuthenticated(true);
+				} else {
+					setUser(null);
+					setIsAuthenticated(false);
+				}
 			}
 		} catch (error: unknown) {
 			setUser(null);
