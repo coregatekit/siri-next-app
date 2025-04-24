@@ -1,4 +1,6 @@
-import { Button } from '@/components/ui/button';
+'use client';
+
+import useRoomTypes from '@/app/hooks/use-room-types';
 import { DataTable } from '@/components/ui/data-table';
 import type { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
@@ -27,19 +29,15 @@ const RoomTypesColumn: ColumnDef<RoomType>[] = [
 	{
 		accessorKey: 'action',
 		header: 'Action',
-		// cell: ({ row }) => (
-		// 	<div className='flex gap-2'>
-		// 		<Button className='text-blue-500'>Edit</Button>
-		// 		<Button className='text-red-500'>Delete</Button>
-		// 	</div>
-		// ),
 	},
 ];
 
 export default function ManageRoomTypes() {
+	const { roomTypeData } = useRoomTypes();
+
 	return (
 		<div className='rounded-md bg-white shadow-md'>
-			<DataTable columns={RoomTypesColumn} data={[]} />
+			<DataTable columns={RoomTypesColumn} data={roomTypeData || []} />
 		</div>
 	);
 }
