@@ -94,5 +94,40 @@ describe('Authentication Service', () => {
 				hashedPassword,
 			);
 		});
+
+		it('should throw error when an unknown error occurs', async () => {
+			// Arrange
+			const username = 'testuser';
+			const password = 'testpassword';
+			const error = new Error('Database connection failed');
+			employeeService.findEmployeeByUsername = jest
+				.fn()
+				.mockRejectedValue(error);
+
+			// Act & Assert
+			await expect(service.signIn(username, password)).rejects.toThrowError(
+				'Database connection failed',
+			);
+			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
+				username,
+			);
+		});
+
+		it('should throw generic error when unknown error without message occurs', async () => {
+			// Arrange
+			const username = 'testuser';
+			const password = 'testpassword';
+			employeeService.findEmployeeByUsername = jest
+				.fn()
+				.mockRejectedValue('Something went wrong');
+
+			// Act & Assert
+			await expect(service.signIn(username, password)).rejects.toThrowError(
+				'Unknown error occurred',
+			);
+			expect(employeeService.findEmployeeByUsername).toHaveBeenCalledWith(
+				username,
+			);
+		});
 	});
 });
