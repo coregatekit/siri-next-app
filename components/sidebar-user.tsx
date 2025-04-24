@@ -25,10 +25,15 @@ import {
 	UserIcon,
 } from 'lucide-react';
 import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
+import { useRouter } from 'next/navigation';
 
 export default function SidebarUser() {
-	const { user } = useAuth();
-	const { isMobile } = useSidebar();
+	const { user, logout } = useAuth();
+  const router = useRouter();
+
+	const handleRoute = (route: string) => {
+    router.push(route);
+  };
 
 	return (
 		<SidebarMenu>
@@ -76,17 +81,20 @@ export default function SidebarUser() {
 						<DropdownMenuSeparator />
 
 						<DropdownMenuGroup>
-							<DropdownMenuItem className='flex flex-row gap-2 p-2 cursor-pointer'>
+							<DropdownMenuItem className='flex flex-row gap-2 p-2 cursor-pointer' onClick={() => handleRoute('/profile')}>
 								<UserCircleIcon />
 								Profile
 							</DropdownMenuItem>
-							<DropdownMenuItem className='flex flex-row gap-2 p-2 cursor-pointer'>
+							<DropdownMenuItem className='flex flex-row gap-2 p-2 cursor-pointer' onClick={() => handleRoute('/profile/settings')}>
 								<SettingsIcon />
 								Settings
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem className='flex flex-row gap-2 p-2 cursor-pointer'>
+						<DropdownMenuItem
+							className='flex flex-row gap-2 p-2 cursor-pointer'
+							onClick={logout}
+						>
 							<LogOutIcon />
 							Log out
 						</DropdownMenuItem>
