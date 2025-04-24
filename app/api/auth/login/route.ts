@@ -1,7 +1,6 @@
 import { ONE_HOUR } from '@/commons/constants';
 import { getAuthenticationService } from '@/lib/service';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {

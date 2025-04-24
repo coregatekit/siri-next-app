@@ -5,6 +5,7 @@ export async function POST(request: NextRequest) {
 	try {
 		const cookieStore = await cookies();
 		cookieStore.delete('token');
+		cookieStore.delete('user');
 
 		return NextResponse.redirect(new URL('/login', request.url), {
 			status: 301,
