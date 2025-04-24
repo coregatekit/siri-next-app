@@ -8,12 +8,23 @@ import {
 import {
 	DropdownMenu,
 	DropdownMenuContent,
+	DropdownMenuGroup,
 	DropdownMenuLabel,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import useAuth from '@/app/contexts/auth.context';
-import { MoreVerticalIcon, UserIcon } from 'lucide-react';
+import {
+	BellIcon,
+	CreditCardIcon,
+	LogOutIcon,
+	MoreVerticalIcon,
+	SettingsIcon,
+	UserCircleIcon,
+	UserIcon,
+} from 'lucide-react';
+import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 
 export default function SidebarUser() {
 	const { user } = useAuth();
@@ -24,7 +35,7 @@ export default function SidebarUser() {
 			<SidebarMenuItem>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<SidebarMenuButton size={'lg'} className='w-full'>
+						<SidebarMenuButton size={'lg'} className='w-full cursor-pointer'>
 							<Avatar>
 								<AvatarImage src={user?.avatar} alt={user?.name} />
 								<AvatarFallback>
@@ -61,6 +72,24 @@ export default function SidebarUser() {
 								</div>
 							</div>
 						</DropdownMenuLabel>
+
+						<DropdownMenuSeparator />
+
+						<DropdownMenuGroup>
+							<DropdownMenuItem className='flex flex-row gap-2 p-2 cursor-pointer'>
+								<UserCircleIcon />
+								Profile
+							</DropdownMenuItem>
+							<DropdownMenuItem className='flex flex-row gap-2 p-2 cursor-pointer'>
+								<SettingsIcon />
+								Settings
+							</DropdownMenuItem>
+						</DropdownMenuGroup>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem className='flex flex-row gap-2 p-2 cursor-pointer'>
+							<LogOutIcon />
+							Log out
+						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</SidebarMenuItem>
