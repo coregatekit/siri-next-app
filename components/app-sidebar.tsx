@@ -16,6 +16,7 @@ import {
 import type { SidebarMenuItem as TSidebarMenuItem } from '@/app/types/menu';
 import Link from 'next/link';
 import useAuth from '@/app/contexts/auth.context';
+import SidebarUser from './sidebar-user';
 
 const roomManagementSidebars: TSidebarMenuItem[] = [
 	{
@@ -110,6 +111,13 @@ export default function AppSidebar() {
 const AuthenticatedSidebar = () => {
 	return (
 		<SidebarContent>
+			{/* User Profile */}
+			<SidebarGroup>
+				<SidebarGroupContent>
+					<SidebarUser />
+				</SidebarGroupContent>
+			</SidebarGroup>
+
 			{/* Room management Menu */}
 			<SidebarGroup>
 				<SidebarGroupLabel>
