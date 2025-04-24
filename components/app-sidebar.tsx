@@ -74,7 +74,9 @@ export default function AppSidebar() {
 		<Sidebar>
 			{/* Header */}
 			<SidebarHeader>
-				<h1 className='text-2xl font-bold text-primary'>Siri Resort</h1>
+				<Link href='/' className='flex items-center gap-2'>
+					<span className='text-2xl font-bold text-primary'>Siri Resort</span>
+				</Link>
 			</SidebarHeader>
 			<div className='border-t border-slate-200 my-1' />
 
