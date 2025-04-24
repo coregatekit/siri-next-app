@@ -3,9 +3,9 @@ interface IRoomTypeService {
 }
 
 interface RoomTypeData {
-  id: number;
+  id: string;
   name: string;
-  description: string;
+  detail?: string;
   createdAt: Date;
   updatedAt: Date;
 }

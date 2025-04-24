@@ -9,6 +9,18 @@ export class RoomTypeService implements IRoomTypeService {
 	}
 
 	async getAllRoomTypes(): Promise<RoomTypeData[]> {
-		return [];
+		try {
+			const types = await this.prisma.type.findMany();
+			return types.map((type) => ({
+				id: type.id,
+				name: type.name,
+				detail: type.detail || undefined,
+				createdAt: type.createdAt,
+				updatedAt: type.updatedAt,
+			}));
+		} catch (error: unknown) {
+      console.error('Error fetching room types:', error);
+      throw new Error('Failed to fetch room types');
+    }
 	}
 }
