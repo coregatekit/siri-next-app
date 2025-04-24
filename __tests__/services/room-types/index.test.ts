@@ -1,3 +1,4 @@
+import BookingDetail from '@/app/booking/[id]/page';
 import { RoomTypeService } from '@/services/room-types';
 import type { IRoomTypeService } from '@/services/room-types/interfaces';
 import type { PrismaClient, Type } from '@prisma/client';
@@ -79,6 +80,7 @@ describe('RoomType Service', () => {
 				{
 					id: '1',
 					name: 'Deluxe Room',
+					detail: null,
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
