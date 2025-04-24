@@ -36,6 +36,24 @@ export class RoomTypeService implements IRoomTypeService {
 	 * @throws {Error} - Throws an error if the database query fails.
 	 */
 	async createRoomType(data: CreateRoomType): Promise<RoomTypeData> {
-		return {} as RoomTypeData;	
+		const { name, detail } = data;
+		try {
+			const newType = await this.prisma.type.create({
+				data: {
+					name,
+					detail,
+				},
+			});
+			return {
+				id: newType.id,
+				name: newType.name,
+				detail: newType.detail || undefined,
+				createdAt: newType.createdAt,
+				updatedAt: newType.updatedAt,
+			};
+		} catch (error: unknown) {
+			console.error('Error creating room type:', error);
+			throw new Error('Failed to create room type');
+		}
 	}
 }
